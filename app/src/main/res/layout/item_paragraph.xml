@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/content"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:typeface="monospace"
+          android:padding="8dp"
+          android:lineSpacingExtra="8dp"
+          android:textAppearance="?android:textAppearanceListItem"
+          tools:text="Ceci est un message important de la part du Dr. ████ : tous les employés doivent retourner en salle de travail."
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"/>

@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'android-aspectj'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
+
+    defaultConfig {
+        applicationId "fr.xgouchet.scparchive"
+        minSdkVersion 19
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        debug {
+        }
+
+        release {
+            Properties props = new Properties()
+            props.load(new FileInputStream("${projectDir.parentFile.parentFile.absolutePath}/.publish/keystores.properties"))
+            storeFile file("${projectDir.parentFile.parentFile.absolutePath}/.publish/xgouchet.keystore")
+
+            storePassword props.releaseStorePassword
+            keyAlias props.releaseKeyAlias
+            keyPassword props.releaseKeyPassword
+        }
+    }
+
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "♭"
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+dependencies {
+
+    // ANDROID SUPPORT LIBS
+    compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:cardview-v7:24.2.0'
+    compile 'com.android.support:recyclerview-v7:24.2.0'
+    compile 'com.android.support:support-annotations:24.2.0'
+    compile 'com.android.support:design:24.2.0'
+
+    // HTML SOUP
+    compile 'org.jsoup:jsoup:1.8.3'
+
+    // IMAGES
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'jp.wasabeef:picasso-transformations:2.1.0'
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+
+    // ARCHITECTURE
+    compile 'com.jakewharton:butterknife:8.0.0'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    apt 'com.google.dagger:dagger-compiler:2.2'
+    compile 'com.google.dagger:dagger:2.2'
+
+    // COUNSEL
+    compile 'com.github.deezer.Counsel:counsel:master-SNAPSHOT'
+    debugCompile 'com.github.deezer.Counsel:counsel-debug:master-SNAPSHOT'
+
+    //  UNIT TESTS
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.assertj:assertj-core:1.7.0'
+    testCompile 'com.squareup.assertj:assertj-android:1.0.0'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile 'com.android.support:support-annotations:24.2.0'
+    testCompile 'org.robolectric:robolectric:3.1.2'
+}

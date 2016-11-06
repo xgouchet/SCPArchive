@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">SCP Archives</string>
+
+    <string name="title_favorite_articles">Items of interest</string>
+
+    <string name="empty_list">Empty… ?</string>
+    <string name="error_generic">Sorry : %1$s?!</string>
+    <string name="action_previous">Previous</string>
+    <string name="action_shuffle">Random</string>
+    <string name="action_next">Next</string>
+    <string name="action_toggle_favorite">Add/Remove from favorites</string>
+    <string name="action_go_to_selected">Items of interest</string>
+    <string name="action_go_to">Go to …</string>
+    <string name="article_empty">No information about this item</string>
+    <string name="favorite_stamp">Item of interest stamp</string>
+    <string name="about">About …</string>
+</resources>

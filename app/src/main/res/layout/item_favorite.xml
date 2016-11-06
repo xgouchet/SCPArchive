@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/favorite"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+<ImageView
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:padding="8dp"
+    android:src="@drawable/scp_stamp"/>
+    <TextView android:id="@+id/name"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="8dp"
+              android:textAppearance="?android:textAppearanceListItem"
+              android:typeface="monospace"
+              android:layout_gravity="start|center_vertical"
+              tools:text="SCP-495"/>
+</LinearLayout>
