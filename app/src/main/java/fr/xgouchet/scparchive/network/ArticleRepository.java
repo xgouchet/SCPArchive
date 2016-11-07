@@ -92,14 +92,13 @@ public class ArticleRepository {
         }
         Element pageContent = pageContentCandidates.get(0);
         for (Node node : pageContent.childNodes()) {
-            parseElement(article, node);
+            parseNode(article, node);
         }
-
         return article;
     }
 
 
-    private void parseElement(@NonNull Article article, @Nullable Node node) {
+    private void parseNode(@NonNull Article article, @Nullable Node node) {
         if (node == null) return;
 
         if (node instanceof TextNode) {
@@ -108,40 +107,42 @@ public class ArticleRepository {
 
             article.appendParagraph(textNode.getWholeText().trim());
         } else if (node instanceof Element) {
-            Element element = (Element) node;
-            switch (element.tagName()) {
-                case "div":
-                    parseDiv(article, element);
-                    break;
-                case "p":
-                    parseParagraph(article, element);
-                    break;
-                case "ul":
-                    parseUList(article, element);
-                    break;
-                case "ol":
-                    parseOList(article, element);
-                    break;
-                case "img":
-                    parseImage(article, element);
-                    break;
-                case "blockquote":
-                    parseBlockquote(article, element);
-                    break;
-                case "hr":
-                    article.appendHRule();
-                    break;
-                case "h2":
-                    parseHeader(article, element);
-                    break;
-                default:
-                    article.addUnhandledTag(element.tagName());
-                    Log.w(TAG, "Unhandled element " + article.getTitle() + " : " + element.tagName());
-                    Log.d(TAG, element.outerHtml());
-                    break;
-            }
+            parseElement(article, (Element) node);
         }
+    }
 
+    private void parseElement(@NonNull Article article, @NonNull Element element) {
+        switch (element.tagName()) {
+            case "div":
+                parseDiv(article, element);
+                break;
+            case "p":
+                parseParagraph(article, element);
+                break;
+            case "ul":
+                parseUList(article, element);
+                break;
+            case "ol":
+                parseOList(article, element);
+                break;
+            case "img":
+                parseImage(article, element);
+                break;
+            case "blockquote":
+                parseBlockquote(article, element);
+                break;
+            case "hr":
+                article.appendHRule();
+                break;
+            case "h2":
+                parseHeader(article, element);
+                break;
+            default:
+                article.addUnhandledTag(element.tagName());
+                Log.w(TAG, "Unhandled element " + article.getTitle() + " : " + element.tagName());
+                Log.d(TAG, element.outerHtml());
+                break;
+        }
     }
 
     private void parseImage(Article article, Element element) {
@@ -206,32 +207,74 @@ public class ArticleRepository {
 
         // Picture
         if (element.hasClass("scp-image-block")) {
-            Elements imgs = element.select("img");
-            if (imgs.isEmpty()) {
-                Log.w(TAG, "Photo block without image : " + element.outerHtml());
-                return;
-            }
-            String imgUrl = imgs.get(0).attr("abs:src");
-            String caption = element.select("div.scp-image-caption").html();
-            article.appendPhoto(imgUrl, caption);
+            parsePhoto(article, element);
             return;
         }
 
         // Picture
         if (element.hasClass("image-container")) {
-            Elements imgs = element.select("img");
-            if (imgs.isEmpty()) {
-                Log.w(TAG, "Image container without image : " + element.outerHtml());
-                return;
-            }
-            String imgUrl = imgs.get(0).attr("abs:src");
-            article.appendImage(imgUrl);
+            parsePicture(article, element);
             return;
         }
-        // TODO spoilers
+
+        // Spoilers
+        if (element.hasClass("collapsible-block")) {
+            parseFoldable(article, element);
+            return;
+        }
+
 
         Log.w(TAG, "Unhandled div (" + article.getId() + ") \n" + element.outerHtml());
         article.addUnhandledTag("div." + element.className() + "#" + element.id());
+    }
+
+    private void parseFoldable(@NonNull Article article, @NonNull Element element) {
+        Elements foldedLinks = element.select("div.collapsible-block-folded>a");
+        Elements unfoldedLinks = element.select("div.collapsible-block-unfolded-link>a");
+        if (foldedLinks.isEmpty()) {
+            Log.w(TAG, "Collapsible without folded link : " + element.outerHtml());
+            return;
+        }
+        if (unfoldedLinks.isEmpty()) {
+            Log.w(TAG, "Collapsible without unfolded link : " + element.outerHtml());
+            return;
+        }
+        article.startFoldable();
+
+        // Links
+        article.appendFolded(foldedLinks.get(0).html());
+        article.appendLink(unfoldedLinks.get(0).html());
+
+        // content
+        Elements divContents = element.select("div.collapsible-block-content");
+        for (Element divContent : divContents) {
+            for (Node node : divContent.childNodes()) {
+                parseNode(article, node);
+            }
+        }
+
+        article.endFoldable();
+    }
+
+    private void parsePicture(@NonNull Article article, @NonNull Element element) {
+        Elements imgs = element.select("img");
+        if (imgs.isEmpty()) {
+            Log.w(TAG, "Image container without image : " + element.outerHtml());
+            return;
+        }
+        String imgUrl = imgs.get(0).attr("abs:src");
+        article.appendImage(imgUrl);
+    }
+
+    private void parsePhoto(@NonNull Article article, @NonNull Element element) {
+        Elements imgs = element.select("img");
+        if (imgs.isEmpty()) {
+            Log.w(TAG, "Photo block without image : " + element.outerHtml());
+            return;
+        }
+        String imgUrl = imgs.get(0).attr("abs:src");
+        String caption = element.select("div.scp-image-caption").html();
+        article.appendPhoto(imgUrl, caption);
     }
 
     private static String scpUrl(String articleId) {
@@ -240,15 +283,14 @@ public class ArticleRepository {
 
     private Article aboutArticle() {
         Article article = new Article(ABOUT_ARTICLE, "SCP-Archive");
-
+        article.appendBlockquote("<u>Credits:</u>All the content in this app comes from the <a href=\"http://www.scp-wiki.net/\">SCP Foundation wiki</a>, shared under the Creative Commons License (Attribution, Share Alike). An up to date list of all authors is available on the <a href=\"http://www.scp-wiki.net/members-pages\">Authors' page</a>.");
+        article.appendBlockquote("<u>License:</u> SCP-Archive itself is Open-Source, shared under the Creative Commons License (Attribution, Share Alike), and available on <a href=\"https://github.com/xgouchet/SCPArchive\">GitHub</a>");
+        article.appendPhoto("http://i.imgur.com/IDroBfX.jpg", "SCP-Archive on an Android phone");
         article.appendParagraph("<u>Item #:</u> SCP-Archive");
         article.appendParagraph("<u>Object Class:</u> Safe");
         article.appendParagraph("<u>Special Containment Procedures:</u> SCP-Archive needs to be installed on an Android cell-phone at all time, and should be used at least once a week by the owner of the phone.");
         article.appendParagraph("<u>Description:</u> SCP-Archive is an Android application written by Xavier F. Gouchet</a>, and published on the Google Play Store  on 11/07/2016. Its presence on a phone without being used doesn't have any anomalous effect.");
         article.appendParagraph("When used, it displays various redacted report from the SCP Foundation, which consists of thousands of anomalous items, locations, creatures, persons or events.");
-        article.appendBlockquote("<u>Credits:</u>All the content in this app comes from the <a href=\"http://www.scp-wiki.net/\">SCP Foundation wiki</a>, shared under the Creative Commons License (Attribution, Share Alike). An up to date list of all authors is available on the <a href=\"http://www.scp-wiki.net/members-pages\">Authors' page</a>.");
-        article.appendBlockquote("<u>License:</u> SCP-Archive itself is Open-Source, shared under the Creative Commons License (Attribution, Share Alike), and available on <a href=\"https://github.com/xgouchet/SCPArchive\">GitHub</a>");
-        article.appendPhoto("http://i.imgur.com/IDroBfX.jpg", "SCP-Archive on an Android phone");
         article.appendParagraph("<u>Addendum:</u> SCP-Archive relies on several Open-Source libraries : ");
         article.appendListItem("<a href=\"https://jsoup.org/\">JSoup</a>");
         article.appendListItem("<a href=\"http://square.github.io/picasso/\">Picasso</a>");

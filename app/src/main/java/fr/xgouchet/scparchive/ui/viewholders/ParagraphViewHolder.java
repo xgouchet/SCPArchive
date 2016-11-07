@@ -36,4 +36,5 @@ public class ParagraphViewHolder extends ArticleElementViewHolder {
         content.setText(((Paragraph) item).getContent());
         content.setMovementMethod(LinkMovementMethod.getInstance());
     }
+
 }

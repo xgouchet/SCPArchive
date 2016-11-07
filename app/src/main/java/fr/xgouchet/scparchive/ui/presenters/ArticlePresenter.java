@@ -15,10 +15,14 @@ import java.util.List;
 
 import fr.xgouchet.scparchive.R;
 import fr.xgouchet.scparchive.model.Article;
+import fr.xgouchet.scparchive.model.ArticleElement;
+import fr.xgouchet.scparchive.model.Link;
 import fr.xgouchet.scparchive.mvp.BasePresenter;
 import fr.xgouchet.scparchive.mvp.BaseView;
 import fr.xgouchet.scparchive.network.ArticleRepository;
 import fr.xgouchet.scparchive.network.FavoriteArticleRepository;
+import fr.xgouchet.scparchive.network.ResolveFoldableArticle;
+import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -172,14 +176,58 @@ public class ArticlePresenter
         return true;
     }
 
-    /**/ void onArticleLoaded(@Nullable Article article) {
+    public void onInteraction(@NonNull ArticleElement item) {
+        if (article == null) return;
+        if (item instanceof Link) {
+            article.toggleFolded(((Link) item).getFoldableId());
+            resolveFoldables();
+        }
+    }
+
+    private void onArticleLoaded(@Nullable Article article) {
         this.article = article;
         if (view == null) return;
 
         if (article == null) {
             view.setError(new RuntimeException("Nothing to display :-("));
         } else {
-            view.setContent(article);
+            if (article.hasFoldables()) {
+                resolveFoldables();
+            } else {
+                view.setContent(article);
+            }
         }
+    }
+
+    private void onArticleResolved(@Nullable Article article) {
+        if (view == null) return;
+        if (article == null) return;
+        view.setContent(article);
+    }
+
+    private void resolveFoldables() {
+        if (view == null) return;
+
+        Subscription subscription = Observable.just(this.article)
+                .map(new ResolveFoldableArticle())
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Article>() {
+                    @Override public void onCompleted() {
+                        view.setLoading(false);
+                    }
+
+                    @Override public void onError(Throwable e) {
+                        view.setLoading(false);
+                        view.setError(e);
+                        Log.e("ArticlePresenter", "Error resolving foldables", e);
+                    }
+
+                    @Override public void onNext(Article article) {
+                        onArticleResolved(article);
+                    }
+                });
+
+        subscriptions.add(subscription);
     }
 }

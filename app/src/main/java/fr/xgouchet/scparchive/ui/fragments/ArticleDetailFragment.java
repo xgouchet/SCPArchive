@@ -34,7 +34,7 @@ import fr.xgouchet.scparchive.ui.viewholders.BaseViewHolder;
 import static butterknife.ButterKnife.bind;
 
 public class ArticleDetailFragment extends Fragment
-        implements BaseView<ArticlePresenter, Article> {
+        implements BaseView<ArticlePresenter, Article>,BaseViewHolder.Listener<ArticleElement> {
 
     public static final String ARG_ITEM_ID = "item_id";
     public static final String ARG_ITEM_STACK = "item_stack";
@@ -50,7 +50,7 @@ public class ArticleDetailFragment extends Fragment
     private final BaseSimpleAdapter<ArticleElement, ? extends BaseViewHolder<ArticleElement>> adapter;
 
     public ArticleDetailFragment() {
-        adapter = new ArticleElementAdapter();
+        adapter = new ArticleElementAdapter(this);
     }
 
 
@@ -158,4 +158,7 @@ public class ArticleDetailFragment extends Fragment
         loadingProgressBar.setVisibility(active ? View.VISIBLE : View.GONE);
     }
 
+    @Override public void onSelected(@NonNull ArticleElement item) {
+        presenter.onInteraction(item);
+    }
 }

@@ -1,5 +1,6 @@
 package fr.xgouchet.scparchive.ui.adapters;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import fr.xgouchet.scparchive.R;
@@ -8,11 +9,16 @@ import fr.xgouchet.scparchive.model.Blockquote;
 import fr.xgouchet.scparchive.model.HRule;
 import fr.xgouchet.scparchive.model.Header;
 import fr.xgouchet.scparchive.model.Image;
+import fr.xgouchet.scparchive.model.Link;
 import fr.xgouchet.scparchive.model.ListItem;
 import fr.xgouchet.scparchive.model.Paragraph;
 import fr.xgouchet.scparchive.model.Photo;
 import fr.xgouchet.scparchive.ui.viewholders.ArticleElementViewHolder;
+import fr.xgouchet.scparchive.ui.viewholders.BaseViewHolder;
+import fr.xgouchet.scparchive.ui.viewholders.BlockquoteViewHolder;
+import fr.xgouchet.scparchive.ui.viewholders.HeaderViewHolder;
 import fr.xgouchet.scparchive.ui.viewholders.ImageViewHolder;
+import fr.xgouchet.scparchive.ui.viewholders.LinkViewHolder;
 import fr.xgouchet.scparchive.ui.viewholders.ListItemViewHolder;
 import fr.xgouchet.scparchive.ui.viewholders.ParagraphViewHolder;
 import fr.xgouchet.scparchive.ui.viewholders.PhotoViewHolder;
@@ -29,6 +35,13 @@ public class ArticleElementAdapter extends BaseSimpleAdapter<ArticleElement, Art
     private static final int TYPE_BLOCK_QUOTE = 5;
     private static final int TYPE_H_RULE = 6;
     private static final int TYPE_HEADER = 7;
+    private static final int TYPE_LINK = 8;
+
+    @NonNull private final BaseViewHolder.Listener<ArticleElement> listener;
+
+    public ArticleElementAdapter(@NonNull BaseViewHolder.Listener<ArticleElement> listener) {
+        this.listener = listener;
+    }
 
     @Override public int getItemViewType(int position) {
         ArticleElement element = getItem(position);
@@ -44,6 +57,8 @@ public class ArticleElementAdapter extends BaseSimpleAdapter<ArticleElement, Art
             return TYPE_BLOCK_QUOTE;
         } else if (element instanceof Header) {
             return TYPE_HEADER;
+        } else if (element instanceof Link) {
+            return TYPE_LINK;
         } else if (element instanceof Paragraph) {
             return TYPE_PARAGRAPH;
         } else if (element instanceof HRule) {
@@ -56,9 +71,13 @@ public class ArticleElementAdapter extends BaseSimpleAdapter<ArticleElement, Art
     @Override protected ArticleElementViewHolder instantiateViewHolder(int viewType, View view) {
         switch (viewType) {
             case TYPE_PARAGRAPH:
-            case TYPE_BLOCK_QUOTE:
-            case TYPE_HEADER:
                 return new ParagraphViewHolder(null, view);
+            case TYPE_BLOCK_QUOTE:
+                return new BlockquoteViewHolder(null, view);
+            case TYPE_HEADER:
+                return new HeaderViewHolder(null, view);
+            case TYPE_LINK:
+                return new LinkViewHolder(listener, view);
             case TYPE_LIST_ITEM:
                 return new ListItemViewHolder(null, view);
             case TYPE_PHOTO:
@@ -86,6 +105,8 @@ public class ArticleElementAdapter extends BaseSimpleAdapter<ArticleElement, Art
                 return R.layout.item_hrule;
             case TYPE_HEADER:
                 return R.layout.item_header;
+            case TYPE_LINK:
+                return R.layout.item_link;
             default:
                 return android.R.layout.simple_list_item_1;
         }

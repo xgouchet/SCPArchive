@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -13,7 +14,9 @@ import java.util.Random;
  */
 public class Article {
 
-    private String url;
+
+    public static final int NOT_A_FOLDABLE = -1;
+
 
     public static String randomArticleId() {
         final int id = new Random().nextInt(3000);
@@ -25,7 +28,11 @@ public class Article {
     }
 
     @NonNull private final String articleId;
+    @Nullable private String url;
     @NonNull private String title;
+    private int foldableCount = 0;
+    private int currentFoldableId = NOT_A_FOLDABLE;
+    private boolean[] foldableState = new boolean[]{};
 
     @NonNull private final List<ArticleElement> elements = new ArrayList<>();
     @NonNull private final List<String> unhandledTags = new ArrayList<>();
@@ -48,36 +55,65 @@ public class Article {
     }
 
     public void appendParagraph(@NonNull String html) {
-        elements.add(new Paragraph(html));
+        appendElement(new Paragraph(html));
     }
 
     public void appendPhoto(String imgUrl, String caption) {
-        elements.add(new Photo(imgUrl, caption));
+        appendElement(new Photo(imgUrl, caption));
     }
 
     public void appendHRule() {
         if (elements.isEmpty()) return;
-        elements.add(new HRule());
+        appendElement(new HRule());
     }
 
     public void appendImage(String imgUrl) {
-        elements.add(new Image(imgUrl));
+        appendElement(new Image(imgUrl));
     }
 
     public void appendListItem(String html) {
-        elements.add(new ListItem(html));
+        appendElement(new ListItem(html));
     }
 
     public void appendListItem(String html, String bullet) {
-        elements.add(new ListItem(html, bullet));
+        appendElement(new ListItem(html, bullet));
     }
 
     public void appendBlockquote(String html) {
-        elements.add(new Blockquote(html));
+        appendElement(new Blockquote(html));
     }
 
     public void appendHeader(String html) {
-        elements.add(new Header(html));
+        appendElement(new Header(html));
+    }
+
+    public void appendFolded(String html) {
+        if (currentFoldableId == NOT_A_FOLDABLE) {
+            throw new IllegalStateException("You should call appendFolded after startFoldable");
+        }
+
+        final Link articleElement = new Link(html, currentFoldableId);
+        elements.add(new FoldedElement(articleElement, currentFoldableId));
+    }
+
+    public void appendLink(String html) {
+        appendElement(new Link(html, currentFoldableId));
+    }
+
+    public boolean hasFoldables() {
+        return foldableCount > 0;
+    }
+
+    public boolean isFolded(int foldableId) {
+        return foldableState[foldableId];
+    }
+
+    public void appendElement(@NonNull ArticleElement e) {
+        if (currentFoldableId == NOT_A_FOLDABLE) {
+            elements.add(e);
+        } else {
+            elements.add(new UnfoldedElement(e, currentFoldableId));
+        }
     }
 
     @NonNull public List<ArticleElement> getElements() {
@@ -91,6 +127,7 @@ public class Article {
         }
     }
 
+
     @NonNull public String[] getUnhandledTags() {
         return unhandledTags.toArray(new String[unhandledTags.size()]);
     }
@@ -99,7 +136,21 @@ public class Article {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(@Nullable String url) {
         this.url = url;
+    }
+
+    public void startFoldable() {
+        currentFoldableId = foldableCount++;
+    }
+
+    public void endFoldable() {
+        currentFoldableId = NOT_A_FOLDABLE;
+        foldableState = new boolean[foldableCount];
+        Arrays.fill(foldableState, true);
+    }
+
+    public void toggleFolded(int foldableId) {
+        foldableState[foldableId] = !foldableState[foldableId];
     }
 }
