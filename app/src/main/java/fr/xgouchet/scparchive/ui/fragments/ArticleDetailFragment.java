@@ -37,6 +37,7 @@ public class ArticleDetailFragment extends Fragment
         implements BaseView<ArticlePresenter, Article> {
 
     public static final String ARG_ITEM_ID = "item_id";
+    public static final String ARG_ITEM_STACK = "item_stack";
 
     @BindView(R.id.loading) ContentLoadingProgressBar loadingProgressBar;
     @BindView(R.id.list) RecyclerView list;

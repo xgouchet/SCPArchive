@@ -32,7 +32,8 @@ public class ArticleRepository {
 
     public static final String TAG = ArticleRepository.class.getSimpleName();
 
-    public static final String BASE_URL = "http://www.scp-wiki.net/";
+    public static final String BASE_URL = "http://www.scp-wiki.net";
+    public static final String BASE_INTERNAL_URL = "scp-archive://www.scp-wiki.net";
     public static final String ABOUT_ARTICLE = "__fr.xgouchet.scparchive.ABOUT__";
 
     private final OkHttpClient client;
@@ -134,8 +135,7 @@ public class ArticleRepository {
                     parseHeader(article, element);
                     break;
                 default:
-
-                        article.addUnhandledTag(element.tagName());
+                    article.addUnhandledTag(element.tagName());
                     Log.w(TAG, "Unhandled element " + article.getTitle() + " : " + element.tagName());
                     Log.d(TAG, element.outerHtml());
                     break;
@@ -235,25 +235,28 @@ public class ArticleRepository {
     }
 
     private static String scpUrl(String articleId) {
-        return BASE_URL + articleId;
+        return BASE_URL + "/" + articleId;
     }
 
     private Article aboutArticle() {
-        Article article = new Article(ABOUT_ARTICLE, "SCP-");
+        Article article = new Article(ABOUT_ARTICLE, "SCP-Archive");
 
-        article.appendPhoto("http://i.imgur.com/IDroBfX.jpg", "SCP-████ on X█████ G██████'s phone");
-        article.appendParagraph("<u>Item #:</u> SCP-████");
+        article.appendParagraph("<u>Item #:</u> SCP-Archive");
         article.appendParagraph("<u>Object Class:</u> Safe");
-        article.appendParagraph("<u>Special Containment Procedures:</u> SCP-████ needs to be installed on an ███████ cell-phone at all time, and should be used at least once a week by the owner of the phone.");
-        article.appendParagraph("<u>Description:</u> SCP-████ is an ███████ application written by <a href=\"https://play.google.com/store/apps/dev?id=8383668899478393515\">X█████ G██████</a>, and published on the ██████ ████ Store  on ██/██2016. Its presence on a phone without being used doesn't have any anomalous effect.");
-        article.appendParagraph("When used, it displays various redacted report from the ███ Foundation, which consists of thousands of anomalous items, locations, creatures, persons or events.");
-        article.appendParagraph("<u>Addendum:</u> SCP-████ seems to rely on several open-source libraries : ");
+        article.appendParagraph("<u>Special Containment Procedures:</u> SCP-Archive needs to be installed on an Android cell-phone at all time, and should be used at least once a week by the owner of the phone.");
+        article.appendParagraph("<u>Description:</u> SCP-Archive is an Android application written by Xavier F. Gouchet</a>, and published on the Google Play Store  on 11/07/2016. Its presence on a phone without being used doesn't have any anomalous effect.");
+        article.appendParagraph("When used, it displays various redacted report from the SCP Foundation, which consists of thousands of anomalous items, locations, creatures, persons or events.");
+        article.appendBlockquote("<u>Credits:</u>All the content in this app comes from the <a href=\"http://www.scp-wiki.net/\">SCP Foundation wiki</a>, shared under the Creative Commons License (Attribution, Share Alike). An up to date list of all authors is available on the <a href=\"http://www.scp-wiki.net/members-pages\">Authors' page</a>.");
+        article.appendBlockquote("<u>License:</u> SCP-Archive itself is Open-Source, shared under the Creative Commons License (Attribution, Share Alike), and available on <a href=\"https://github.com/xgouchet/SCPArchive\">GitHub</a>");
+        article.appendPhoto("http://i.imgur.com/IDroBfX.jpg", "SCP-Archive on an Android phone");
+        article.appendParagraph("<u>Addendum:</u> SCP-Archive relies on several Open-Source libraries : ");
         article.appendListItem("<a href=\"https://jsoup.org/\">JSoup</a>");
         article.appendListItem("<a href=\"http://square.github.io/picasso/\">Picasso</a>");
         article.appendListItem("<a href=\"https://github.com/wasabeef/picasso-transformations\">Picasso Transformations</a>");
         article.appendListItem("<a href=\"http://jakewharton.github.io/butterknife/\">Butterknife</a>");
         article.appendListItem("<a href=\"https://github.com/ReactiveX/RxAndroid\">RxAndroid</a>");
         article.appendListItem("<a href=\"https://google.github.io/dagger/\">Dagger</a>");
+
 
         return article;
     }

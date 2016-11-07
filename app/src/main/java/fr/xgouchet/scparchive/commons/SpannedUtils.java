@@ -65,7 +65,7 @@ public class SpannedUtils {
             if (url.startsWith("javascript")) {
                 newUrl = "";
             } else {
-                newUrl = ArticleRepository.BASE_URL + url;
+                newUrl = ArticleRepository.BASE_INTERNAL_URL + url;
             }
 
             spannable.removeSpan(span);

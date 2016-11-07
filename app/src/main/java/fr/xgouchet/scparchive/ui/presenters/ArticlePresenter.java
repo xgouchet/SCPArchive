@@ -9,6 +9,10 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import fr.xgouchet.scparchive.R;
 import fr.xgouchet.scparchive.model.Article;
 import fr.xgouchet.scparchive.mvp.BasePresenter;
@@ -29,6 +33,7 @@ public class ArticlePresenter
 
     @Nullable private BaseView<? super ArticlePresenter, Article> view;
     @Nullable private Article article;
+    @NonNull private final List<String> articleStack = new LinkedList<>();
     private String articleId;
 
     @NonNull private final CompositeSubscription subscriptions = new CompositeSubscription();
@@ -48,6 +53,11 @@ public class ArticlePresenter
         this.articleId = articleId;
     }
 
+    public void setArticleStack(@Nullable List<String> stack) {
+        articleStack.clear();
+        if (stack != null) articleStack.addAll(stack);
+    }
+
     @Override public void setView(@NonNull BaseView<? super ArticlePresenter, Article> view) {
         this.view = view;
         view.setPresenter(this);
@@ -63,16 +73,21 @@ public class ArticlePresenter
     }
 
     public void goToRandom() {
-        goToArticle(Article.randomArticleId());
+        goToArticle(Article.randomArticleId(), true);
     }
 
     public void goToArticle(int articleId) {
-        goToArticle(Article.articleId(articleId));
+        goToArticle(Article.articleId(articleId), true);
     }
 
-    public void goToArticle(String randomId) {
-        setArticleId(randomId);
-        load(false);
+    public void goToArticle(String articleId, boolean addToStack) {
+        if (TextUtils.equals(articleId, this.articleId)) {
+            load(false);
+        } else {
+            if (addToStack) articleStack.add(0, this.articleId);
+            this.articleId = articleId;
+            load(true);
+        }
     }
 
     @Override public void load(boolean force) {
@@ -122,6 +137,7 @@ public class ArticlePresenter
     }
 
     public boolean isFavorite() {
+        //noinspection SimplifiableIfStatement
         if (article == null) return false;
         return favoriteArticleRepository.isFavorite(article);
     }
@@ -142,6 +158,18 @@ public class ArticlePresenter
 
     public String getArticleId() {
         return articleId;
+    }
+
+    @NonNull public ArrayList<String> getArticleStack() {
+        return new ArrayList<>(articleStack);
+    }
+
+    public boolean onBackpressed() {
+        if (articleStack.isEmpty()) return false;
+
+        String lastId = articleStack.remove(0);
+        goToArticle(lastId, false);
+        return true;
     }
 
     /**/ void onArticleLoaded(@Nullable Article article) {

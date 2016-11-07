@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.EditText;
 
@@ -38,6 +39,7 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
             presenter.setArticleId(getItem());
         } else {
             presenter.setArticleId(savedInstanceState.getString(ArticleDetailFragment.ARG_ITEM_ID));
+            presenter.setArticleStack(savedInstanceState.getStringArrayList(ArticleDetailFragment.ARG_ITEM_STACK));
         }
         presenter.setView(getFragment());
     }
@@ -46,6 +48,7 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
         super.onSaveInstanceState(outState);
 
         outState.putString(ArticleDetailFragment.ARG_ITEM_ID, presenter.getArticleId());
+        outState.putStringArrayList(ArticleDetailFragment.ARG_ITEM_STACK, presenter.getArticleStack());
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -61,11 +64,23 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
                 promptSelected();
                 break;
             case R.id.about:
-                presenter.goToArticle(ArticleRepository.ABOUT_ARTICLE);
+                presenter.goToArticle(ArticleRepository.ABOUT_ARTICLE, true);
             default:
                 result = super.onOptionsItemSelected(item);
         }
         return result;
+    }
+
+    @Override protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String articleId = readItem(intent);
+        if (TextUtils.isEmpty(articleId)) return;
+        presenter.goToArticle(articleId, true);
+    }
+
+    @Override public void onBackPressed() {
+        if (presenter.onBackpressed()) return;
+        super.onBackPressed();
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -74,7 +89,7 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
             if (requestCode == FAVORITE_REQUEST) {
                 String itemId = data.getStringExtra(ArticleDetailFragment.ARG_ITEM_ID);
                 if (itemId != null) {
-                    presenter.goToArticle(itemId);
+                    presenter.goToArticle(itemId, true);
                 }
             }
         }

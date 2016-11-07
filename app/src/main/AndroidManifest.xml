@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.activities.ArticleDetailActivity">
+        <activity
+            android:name=".ui.activities.ArticleDetailActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -27,12 +29,17 @@
 
                 <data
                     android:host="scp-wiki.net"
-                    android:pathPattern="/.*"
+                    android:pathPrefix="/scp-"
                     android:scheme="http"/>
                 <data
                     android:host="www.scp-wiki.net"
-                    android:pathPattern="/.*"
+                    android:pathPrefix="/scp-"
                     android:scheme="http"/>
+
+                <data
+                    android:host="www.scp-wiki.net"
+                    android:scheme="scp-archive"/>
+
             </intent-filter>
         </activity>
 
