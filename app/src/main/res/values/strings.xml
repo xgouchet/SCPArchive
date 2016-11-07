@@ -3,15 +3,19 @@
 
     <string name="title_favorite_articles">Items of interest</string>
 
-    <string name="empty_list">Empty… ?</string>
+    <string name="empty_list">No files available</string>
+
+    <string name="prompt_go_to">Input SCP file number</string>
+
     <string name="error_generic">Sorry : %1$s?!</string>
-    <string name="action_previous">Previous</string>
-    <string name="action_shuffle">Random</string>
-    <string name="action_next">Next</string>
-    <string name="action_toggle_favorite">Add/Remove from favorites</string>
+
+    <string name="action_random">Open random SCP file</string>
+    <string name="action_toggle_favorite">Add/remove interest</string>
     <string name="action_go_to_selected">Items of interest</string>
-    <string name="action_go_to">Go to …</string>
+    <string name="action_go_to">Open SCP file</string>
+    <string name="action_share">Share</string>
     <string name="article_empty">No information about this item</string>
     <string name="favorite_stamp">Item of interest stamp</string>
     <string name="about">About …</string>
+    <string name="prompt_share_with">Share with...</string>
 </resources>

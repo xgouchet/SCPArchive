@@ -33,6 +33,7 @@ public class ArticleRepository {
     public static final String TAG = ArticleRepository.class.getSimpleName();
 
     public static final String BASE_URL = "http://www.scp-wiki.net/";
+    public static final String ABOUT_ARTICLE = "__fr.xgouchet.scparchive.ABOUT__";
 
     private final OkHttpClient client;
 
@@ -45,9 +46,18 @@ public class ArticleRepository {
 
         return Observable.create(new Observable.OnSubscribe<Article>() {
             @Override public void call(Subscriber<? super Article> subscriber) {
+
+                if (TextUtils.equals(articleId, ABOUT_ARTICLE)) {
+                    subscriber.onNext(aboutArticle());
+                    subscriber.onCompleted();
+                    return;
+                }
+
                 try {
-                    String fullPage = downloadPage(articleId);
+                    final String url = scpUrl(articleId);
+                    String fullPage = downloadPage(url);
                     Article article = extractArticle(fullPage, articleId);
+                    article.setUrl(url);
                     subscriber.onNext(article);
                     subscriber.onCompleted();
                 } catch (Exception e) {
@@ -57,15 +67,15 @@ public class ArticleRepository {
         });
     }
 
-    private String downloadPage(String articleId) throws IOException {
+    private String downloadPage(@NonNull String url) throws IOException {
+
         Request request = new Request.Builder()
-                .url(scpUrl(articleId))
+                .url(url)
                 .build();
 
         Response response = client.newCall(request).execute();
         return response.body().string();
     }
-
 
     private Article extractArticle(String fullHtml, String articleId) throws IOException {
         Document document = Jsoup.parse(fullHtml);
@@ -86,6 +96,7 @@ public class ArticleRepository {
 
         return article;
     }
+
 
     private void parseElement(@NonNull Article article, @Nullable Node node) {
         if (node == null) return;
@@ -119,8 +130,12 @@ public class ArticleRepository {
                 case "hr":
                     article.appendHRule();
                     break;
+                case "h2":
+                    parseHeader(article, element);
+                    break;
                 default:
-                    article.addUnhandledTag(element.tagName());
+
+                        article.addUnhandledTag(element.tagName());
                     Log.w(TAG, "Unhandled element " + article.getTitle() + " : " + element.tagName());
                     Log.d(TAG, element.outerHtml());
                     break;
@@ -129,17 +144,17 @@ public class ArticleRepository {
 
     }
 
+    private void parseImage(Article article, Element element) {
+        String imgUrl = element.attr("abs:src");
+        article.appendImage(imgUrl);
+    }
+
     private void parseBlockquote(Article article, Element element) {
         String html = element.html();
         html = html.replaceAll("<strong>", "<u>");
         html = html.replaceAll("</strong>", "</u>");
 
         article.appendBlockquote(html);
-    }
-
-    private void parseImage(Article article, Element element) {
-        String imgUrl = element.attr("abs:src");
-        article.appendImage(imgUrl);
     }
 
     private void parseUList(Article article, Element element) {
@@ -170,6 +185,15 @@ public class ArticleRepository {
         html = html.replaceAll("</strong>", "</u>");
 
         article.appendParagraph(html);
+    }
+
+    private void parseHeader(@NonNull Article article, @NonNull Element element) {
+
+        String html = element.html();
+        html = html.replaceAll("<strong>", "<u>");
+        html = html.replaceAll("</strong>", "</u>");
+
+        article.appendHeader(html);
     }
 
     private void parseDiv(@NonNull Article article, @NonNull Element element) {
@@ -212,5 +236,25 @@ public class ArticleRepository {
 
     private static String scpUrl(String articleId) {
         return BASE_URL + articleId;
+    }
+
+    private Article aboutArticle() {
+        Article article = new Article(ABOUT_ARTICLE, "SCP-");
+
+        article.appendPhoto("http://i.imgur.com/IDroBfX.jpg", "SCP-████ on X█████ G██████'s phone");
+        article.appendParagraph("<u>Item #:</u> SCP-████");
+        article.appendParagraph("<u>Object Class:</u> Safe");
+        article.appendParagraph("<u>Special Containment Procedures:</u> SCP-████ needs to be installed on an ███████ cell-phone at all time, and should be used at least once a week by the owner of the phone.");
+        article.appendParagraph("<u>Description:</u> SCP-████ is an ███████ application written by <a href=\"https://play.google.com/store/apps/dev?id=8383668899478393515\">X█████ G██████</a>, and published on the ██████ ████ Store  on ██/██2016. Its presence on a phone without being used doesn't have any anomalous effect.");
+        article.appendParagraph("When used, it displays various redacted report from the ███ Foundation, which consists of thousands of anomalous items, locations, creatures, persons or events.");
+        article.appendParagraph("<u>Addendum:</u> SCP-████ seems to rely on several open-source libraries : ");
+        article.appendListItem("<a href=\"https://jsoup.org/\">JSoup</a>");
+        article.appendListItem("<a href=\"http://square.github.io/picasso/\">Picasso</a>");
+        article.appendListItem("<a href=\"https://github.com/wasabeef/picasso-transformations\">Picasso Transformations</a>");
+        article.appendListItem("<a href=\"http://jakewharton.github.io/butterknife/\">Butterknife</a>");
+        article.appendListItem("<a href=\"https://github.com/ReactiveX/RxAndroid\">RxAndroid</a>");
+        article.appendListItem("<a href=\"https://google.github.io/dagger/\">Dagger</a>");
+
+        return article;
     }
 }

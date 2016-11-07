@@ -9,24 +9,35 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/shuffle"
-        android:icon="@drawable/ic_shuffle_black_24dp"
-        android:title="@string/action_shuffle"
+        android:id="@+id/random"
+        android:icon="@drawable/ic_random_black_24dp"
+        android:title="@string/action_random"
         app:showAsAction="always"/>
 
     <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_share_black_24dp"
+        android:title="@string/action_share"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:icon="@drawable/ic_work_black_24dp"
         android:id="@+id/goToSelected"
         android:title="@string/action_go_to_selected"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/goTo"
+        android:icon="@drawable/ic_open_black_24dp"
         android:title="@string/action_go_to"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/about"
+        android:icon="@drawable/ic_about_black_24dp"
         android:title="@string/about"
         app:showAsAction="ifRoom"/>
+
+
 
 </menu>

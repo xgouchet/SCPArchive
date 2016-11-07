@@ -18,6 +18,7 @@ import butterknife.BindView;
 import fr.xgouchet.scparchive.R;
 import fr.xgouchet.scparchive.mvp.BaseListPresenter;
 import fr.xgouchet.scparchive.mvp.BaseListView;
+import fr.xgouchet.scparchive.ui.activities.BaseActivity;
 import fr.xgouchet.scparchive.ui.adapters.BaseSimpleAdapter;
 import fr.xgouchet.scparchive.ui.viewholders.BaseViewHolder;
 
@@ -53,6 +54,7 @@ public abstract class BaseListFragment<T, A extends BaseSimpleAdapter<T, ? exten
 
         bind(this, view);
 
+        message.setTypeface(((BaseActivity)getActivity()).getAppComponent().getTypefaceForCaption());
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
         return view;
@@ -79,6 +81,7 @@ public abstract class BaseListFragment<T, A extends BaseSimpleAdapter<T, ? exten
     @Override public void setEmpty() {
         message.setText(R.string.empty_list);
         message.setVisibility(View.VISIBLE);
+        message.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_scp_black_48dp, 0, 0);
         list.setVisibility(View.GONE);
     }
 

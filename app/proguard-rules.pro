@@ -15,3 +15,24 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# OKHTTP
+-dontwarn com.squareup.okhttp.**
+-dontwarn okhttp3.**
+-dontwarn okio.**
+
+# RXJAVA
+-keep class rx.schedulers.Schedulers {
+    public static <methods>;
+}
+-keep class rx.schedulers.ImmediateScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.TestScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.Schedulers {
+    public static ** test();
+}
+-keep class rx.internal.util.unsafe.** { *; }
+-dontwarn rx.internal.**

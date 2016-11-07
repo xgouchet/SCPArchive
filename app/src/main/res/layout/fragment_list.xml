@@ -31,9 +31,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="16dp"
+        android:typeface="monospace"
         android:drawableTop="@android:drawable/stat_notify_error"
         android:gravity="center_horizontal"
-        android:textAppearance="?android:textAppearanceLarge"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@color/textColorSecondary"
         android:visibility="gone"
         tools:text="Ooops"
         tools:visibility="visible"/>

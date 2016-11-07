@@ -14,15 +14,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
+import fr.xgouchet.scparchive.BuildConfig;
 import fr.xgouchet.scparchive.R;
 import fr.xgouchet.scparchive.model.Article;
 import fr.xgouchet.scparchive.model.ArticleElement;
 import fr.xgouchet.scparchive.mvp.BaseView;
+import fr.xgouchet.scparchive.ui.activities.BaseActivity;
 import fr.xgouchet.scparchive.ui.adapters.ArticleElementAdapter;
 import fr.xgouchet.scparchive.ui.adapters.BaseSimpleAdapter;
 import fr.xgouchet.scparchive.ui.presenters.ArticlePresenter;
@@ -37,7 +40,7 @@ public class ArticleDetailFragment extends Fragment
 
     @BindView(R.id.loading) ContentLoadingProgressBar loadingProgressBar;
     @BindView(R.id.list) RecyclerView list;
-    @BindView(R.id.empty) View empty;
+    @BindView(R.id.empty) TextView empty;
     @BindView(R.id.stamp) View stamp;
 
 
@@ -71,6 +74,7 @@ public class ArticleDetailFragment extends Fragment
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
 
+        empty.setTypeface(((BaseActivity) getActivity()).getAppComponent().getTypefaceForCaption());
         return rootView;
     }
 
@@ -82,16 +86,14 @@ public class ArticleDetailFragment extends Fragment
         boolean result = true;
         switch (item.getItemId()) {
             case R.id.toggle_favorite:
-                toggleFavorite();
+                presenter.toggleFavorite();
                 break;
+            case R.id.share:
+                presenter.shareArticle();
             default:
                 result = super.onOptionsItemSelected(item);
         }
         return result;
-    }
-
-    private void toggleFavorite() {
-        presenter.toggleFavorite();
     }
 
 
@@ -137,19 +139,22 @@ public class ArticleDetailFragment extends Fragment
             list.scrollToPosition(0);
         }
 
-        final String[] unhandledTags = content.getUnhandledTags();
-        if (unhandledTags.length > 0) {
-            Snackbar.make(list,
-                    "Unhandled tags : " + Arrays.toString(unhandledTags),
-                    Snackbar.LENGTH_LONG)
-                    .show();
-        }
-
         boolean favorite = presenter.isFavorite();
         stamp.setVisibility(favorite ? View.VISIBLE : View.GONE);
+
+        if (BuildConfig.DEBUG) {
+            final String[] unhandledTags = content.getUnhandledTags();
+            if (unhandledTags.length > 0) {
+                Snackbar.make(list,
+                        "Unhandled tags : " + Arrays.toString(unhandledTags),
+                        Snackbar.LENGTH_LONG)
+                        .show();
+            }
+        }
     }
 
     @Override public void setLoading(boolean active) {
         loadingProgressBar.setVisibility(active ? View.VISIBLE : View.GONE);
     }
+
 }

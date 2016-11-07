@@ -15,4 +15,5 @@ public interface BaseView<P, T> {
     void setContent(@NonNull T content);
 
     void setLoading(boolean b);
+
 }

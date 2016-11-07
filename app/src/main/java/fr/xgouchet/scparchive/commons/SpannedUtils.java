@@ -54,7 +54,8 @@ public class SpannedUtils {
 
         for (URLSpan span : spans) {
             String url = span.getURL();
-            if (url.startsWith("http://")) continue;
+            if (url.startsWith("http://")
+                    || url.startsWith("https://")) continue;
 
 
             int start = spannable.getSpanStart(span);

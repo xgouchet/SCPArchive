@@ -37,6 +37,8 @@ public abstract class BaseFragmentActivity<T, F extends Fragment> extends BaseAc
                         .add(R.id.fragment_container, fragment)
                         .commit();
             }
+        } else {
+            fragment = (F) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         }
     }
 

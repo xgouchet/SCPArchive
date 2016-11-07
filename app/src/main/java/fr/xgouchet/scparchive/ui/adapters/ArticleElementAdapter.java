@@ -6,6 +6,7 @@ import fr.xgouchet.scparchive.R;
 import fr.xgouchet.scparchive.model.ArticleElement;
 import fr.xgouchet.scparchive.model.Blockquote;
 import fr.xgouchet.scparchive.model.HRule;
+import fr.xgouchet.scparchive.model.Header;
 import fr.xgouchet.scparchive.model.Image;
 import fr.xgouchet.scparchive.model.ListItem;
 import fr.xgouchet.scparchive.model.Paragraph;
@@ -27,6 +28,7 @@ public class ArticleElementAdapter extends BaseSimpleAdapter<ArticleElement, Art
     private static final int TYPE_IMAGE = 4;
     private static final int TYPE_BLOCK_QUOTE = 5;
     private static final int TYPE_H_RULE = 6;
+    private static final int TYPE_HEADER = 7;
 
     @Override public int getItemViewType(int position) {
         ArticleElement element = getItem(position);
@@ -40,6 +42,8 @@ public class ArticleElementAdapter extends BaseSimpleAdapter<ArticleElement, Art
             return TYPE_LIST_ITEM;
         } else if (element instanceof Blockquote) {
             return TYPE_BLOCK_QUOTE;
+        } else if (element instanceof Header) {
+            return TYPE_HEADER;
         } else if (element instanceof Paragraph) {
             return TYPE_PARAGRAPH;
         } else if (element instanceof HRule) {
@@ -53,6 +57,7 @@ public class ArticleElementAdapter extends BaseSimpleAdapter<ArticleElement, Art
         switch (viewType) {
             case TYPE_PARAGRAPH:
             case TYPE_BLOCK_QUOTE:
+            case TYPE_HEADER:
                 return new ParagraphViewHolder(null, view);
             case TYPE_LIST_ITEM:
                 return new ListItemViewHolder(null, view);
@@ -79,6 +84,8 @@ public class ArticleElementAdapter extends BaseSimpleAdapter<ArticleElement, Art
                 return R.layout.item_blockquote;
             case TYPE_H_RULE:
                 return R.layout.item_hrule;
+            case TYPE_HEADER:
+                return R.layout.item_header;
             default:
                 return android.R.layout.simple_list_item_1;
         }

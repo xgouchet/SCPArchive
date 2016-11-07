@@ -4,6 +4,17 @@ This is an Android application to discover and read SCP Foundation articles
 
 ![Feature graphic](https://github.com/xgouchet/SCPArchive/raw/master/graph/feature.png)
 
+## Features
+
+ - Read articles from the SCP Foundation
+ - Mark articles as items of interest
+
+### TODO
+
+ - Handle spoiler elements
+ - Handle footnotes
+ - Share articles
+ - Find a way to retrieve item names
 
 ## Credits
 
@@ -19,12 +30,12 @@ This application uses several Android libraries :
  - [Picasso](http://square.github.io/picasso/) (under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0))
  - [Picasso Transformations](https://github.com/wasabeef/picasso-transformations) (under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0))
  - [Butterknife](http://jakewharton.github.io/butterknife/) (under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0))
- - [RxJava](https://github.com/ReactiveX/RxJava) & [RxAndroid](https://github.com/ReactiveX/RxAndroid) (under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0))
+ - [RxAndroid](https://github.com/ReactiveX/RxAndroid) (under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0))
  - [Dagger](https://google.github.io/dagger/) (under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0))
  
 ### Fonts
 
-This application uses severall Typewritter fonts : 
+This application uses several Typewriter fonts : 
 
  - "1942" by Johan Holmdahl
  - "CarbonType" by [Vic Fieger](http://vicfieger.tumblr.com/tagged/vic-fieger-font)

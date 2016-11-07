@@ -34,6 +34,9 @@
         android:layout_gravity="center_horizontal|center_vertical"
         android:drawableTop="@drawable/ic_scp_black_48dp"
         android:text="@string/article_empty"
+        android:gravity="center_horizontal"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@color/textColorSecondary"
         android:visibility="gone"/>
 
     <ImageView

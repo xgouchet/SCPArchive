@@ -27,13 +27,13 @@ public class FavoriteArticleViewHolder extends BaseViewHolder<String> {
         bind(this, itemView);
 
         Typeface typeface = BaseApplication.from(itemView.getContext())
-                .getAppComponent().getTypefaceForTitle();
+                .getAppComponent().getTypefaceForCaption();
         name.setTypeface(typeface);
     }
 
     @Override protected void onBindItem(@NonNull String item) {
         if (TextUtils.equals(item, "scp-2521")) {
-            name.setText("●●|●●●●●|●●|●");
+            name.setText("●●/●●●●●/●●/●");
         } else {
             name.setText(item.toUpperCase());
         }

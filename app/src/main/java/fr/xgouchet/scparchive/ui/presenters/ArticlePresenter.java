@@ -1,10 +1,15 @@
 package fr.xgouchet.scparchive.ui.presenters;
 
+import android.content.ClipData;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import fr.xgouchet.scparchive.R;
 import fr.xgouchet.scparchive.model.Article;
 import fr.xgouchet.scparchive.mvp.BasePresenter;
 import fr.xgouchet.scparchive.mvp.BaseView;
@@ -29,9 +34,12 @@ public class ArticlePresenter
     @NonNull private final CompositeSubscription subscriptions = new CompositeSubscription();
     @NonNull private final ArticleRepository articleRepository;
     @NonNull private final FavoriteArticleRepository favoriteArticleRepository;
+    @NonNull private final Context context;
 
-    public ArticlePresenter(@NonNull ArticleRepository repository,
+    public ArticlePresenter(@NonNull Context context,
+                            @NonNull ArticleRepository repository,
                             @NonNull FavoriteArticleRepository favoriteArticleRepository) {
+        this.context = context;
         this.articleRepository = repository;
         this.favoriteArticleRepository = favoriteArticleRepository;
     }
@@ -116,6 +124,24 @@ public class ArticlePresenter
     public boolean isFavorite() {
         if (article == null) return false;
         return favoriteArticleRepository.isFavorite(article);
+    }
+
+    public void shareArticle() {
+        if (article == null) return;
+        if (view == null) return;
+        final String url = article.getUrl();
+        if (url != null) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, url);
+            intent.setType("text/plain");
+            intent.setClipData(ClipData.newRawUri("uri", Uri.parse(url)));
+
+            context.startActivity(Intent.createChooser(intent, context.getString(R.string.prompt_share_with)));
+        }
+    }
+
+    public String getArticleId() {
+        return articleId;
     }
 
     /**/ void onArticleLoaded(@Nullable Article article) {

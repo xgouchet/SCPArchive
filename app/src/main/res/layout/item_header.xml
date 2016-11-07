@@ -4,8 +4,10 @@
           xmlns:tools="http://schemas.android.com/tools"
           android:typeface="monospace"
           android:padding="8dp"
+          android:gravity="center_horizontal|top"
           android:lineSpacingExtra="8dp"
           android:textAppearance="?android:textAppearanceListItem"
-          tools:text="Ceci est un message important de la part du Dr. ████ : tous les employés doivent retourner en salle de travail."
+          tools:text="Backup"
+          android:textSize="20sp"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"/>

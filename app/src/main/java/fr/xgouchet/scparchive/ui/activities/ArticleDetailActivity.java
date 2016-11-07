@@ -14,6 +14,7 @@ import android.widget.EditText;
 
 import fr.xgouchet.scparchive.R;
 import fr.xgouchet.scparchive.model.Article;
+import fr.xgouchet.scparchive.network.ArticleRepository;
 import fr.xgouchet.scparchive.ui.fragments.ArticleDetailFragment;
 import fr.xgouchet.scparchive.ui.presenters.ArticlePresenter;
 
@@ -29,16 +30,28 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
         super.onCreate(savedInstanceState);
         setTitle("");
 
-        presenter = new ArticlePresenter(getAppComponent().getArticleRepository(),
+        presenter = new ArticlePresenter(this,
+                getAppComponent().getArticleRepository(),
                 getAppComponent().getFavoriteArticleRepository());
-        presenter.setArticleId(getItem());
+
+        if (savedInstanceState == null) {
+            presenter.setArticleId(getItem());
+        } else {
+            presenter.setArticleId(savedInstanceState.getString(ArticleDetailFragment.ARG_ITEM_ID));
+        }
         presenter.setView(getFragment());
+    }
+
+    @Override protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(ArticleDetailFragment.ARG_ITEM_ID, presenter.getArticleId());
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         boolean result = true;
         switch (item.getItemId()) {
-            case R.id.shuffle:
+            case R.id.random:
                 presenter.goToRandom();
                 break;
             case R.id.goTo:
@@ -47,6 +60,8 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
             case R.id.goToSelected:
                 promptSelected();
                 break;
+            case R.id.about:
+                presenter.goToArticle(ArticleRepository.ABOUT_ARTICLE);
             default:
                 result = super.onOptionsItemSelected(item);
         }
@@ -77,6 +92,7 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
         if (intent != null) {
             Uri url = intent.getData();
             if (url != null) {
+
                 articleId = url.getPath();
 
                 // remove leading slash
@@ -107,10 +123,10 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
         final EditText input = new EditText(this);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Title");
+        builder.setTitle(R.string.prompt_go_to);
         input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         builder.setView(input);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int articleId;
@@ -122,7 +138,7 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
                 }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

@@ -1,6 +1,7 @@
 package fr.xgouchet.scparchive.model;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.Random;
  * @author Xavier Gouchet
  */
 public class Article {
+
+    private String url;
 
     public static String randomArticleId() {
         final int id = new Random().nextInt(3000);
@@ -73,9 +76,14 @@ public class Article {
         elements.add(new Blockquote(html));
     }
 
+    public void appendHeader(String html) {
+        elements.add(new Header(html));
+    }
+
     @NonNull public List<ArticleElement> getElements() {
         return elements;
     }
+
 
     public void addUnhandledTag(String tagName) {
         if (!unhandledTags.contains(tagName)) {
@@ -83,8 +91,15 @@ public class Article {
         }
     }
 
-
     @NonNull public String[] getUnhandledTags() {
         return unhandledTags.toArray(new String[unhandledTags.size()]);
+    }
+
+    @Nullable public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
