@@ -15,6 +15,8 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 import fr.xgouchet.scparchive.model.Article;
@@ -35,6 +37,11 @@ public class ArticleRepository {
     public static final String BASE_URL = "http://www.scp-wiki.net";
     public static final String BASE_INTERNAL_URL = "scp-archive://www.scp-wiki.net";
     public static final String ABOUT_ARTICLE = "__fr.xgouchet.scparchive.ABOUT__";
+
+    private static final String DISCLAIMER = "This article comes from the " +
+            "<a href=\"http://www.scp-wiki.net\">SCP Foundation Wiki</a>.\n" +
+            "Use authorised under the Creative Commons License (Share Alike, Attribution, v3)";
+    private static final String AUTHORS_CREDIT = "Credits for this article go to its authors on the wiki. You can check the list of authors with the following link : ";
 
     private final OkHttpClient client;
 
@@ -80,21 +87,70 @@ public class ArticleRepository {
 
     private Article extractArticle(String fullHtml, String articleId) throws IOException {
         Document document = Jsoup.parse(fullHtml);
-        Elements pageContentCandidates = document.select("#page-content");
+        Article article = new Article(articleId, articleId.toUpperCase(Locale.US));
+        if (TextUtils.equals(article.getId(), "scp-2521")) {
+            article.setTitle("●●|●●●●●|●●|●");
+        }
 
-        if (pageContentCandidates.isEmpty()) {
+        parseContent(document, article);
+        if (article.isEmpty()) return article;
+
+        appendDisclaimerAndAuthors(article);
+
+        return article;
+    }
+
+    private void appendDisclaimerAndAuthors(Article article) {
+        article.appendHRule();
+        article.appendFooter(DISCLAIMER);
+        article.appendFooter(AUTHORS_CREDIT);
+        article.appendFooter("<a href=\"" + scpUrl(article.getId()) + "#_history\">Authors of " + article.getTitle() + "</a>");
+    }
+
+    @Nullable public static Element selectFirst(@NonNull Element parent, @NonNull String query) {
+        Elements candidates = parent.select(query);
+
+        if ((candidates == null) || candidates.isEmpty()) return null;
+        return candidates.get(0);
+    }
+
+//    private Map<String, String> parseAuthors(@NonNull Document document) {
+//        final Map<String, String> authors = new HashMap<>();
+//        Element revisionList = selectFirst(document, "#revision-list");
+//        if (revisionList == null) return authors;
+//
+//        Elements rows = revisionList.select("tr");
+//        if (rows.isEmpty()) return authors;
+//
+//        for (Element row : rows) {
+//            Element printUser = selectFirst(row, ".printuser");
+//            if (printUser == null) continue;
+//
+//            Element dateSpan = selectFirst(row, ".odate");
+//            final String date = dateSpan == null ? "" : dateSpan.text();
+//            final String name = printUser.text();
+//            if (authors.containsKey(name)) {
+//                String dates = authors.get(name);
+//                dates += ", " + date;
+//                authors.put(name, dates);
+//            } else {
+//                authors.put(name, date);
+//            }
+//        }
+//
+//        return authors;
+//    }
+
+    private void parseContent(@NonNull Document document, @NonNull Article article) {
+
+        Element pageContent = selectFirst(document, "#page-content");
+        if (pageContent == null) {
             throw new IllegalArgumentException("Nothing to parse... ");
         }
 
-        Article article = new Article(articleId, articleId.toUpperCase(Locale.US));
-        if (TextUtils.equals(articleId, "scp-2521")) {
-            article.setTitle("●●|●●●●●|●●|●");
-        }
-        Element pageContent = pageContentCandidates.get(0);
         for (Node node : pageContent.childNodes()) {
             parseNode(article, node);
         }
-        return article;
     }
 
 
@@ -117,6 +173,7 @@ public class ArticleRepository {
                 parseDiv(article, element);
                 break;
             case "p":
+            case "span":
                 parseParagraph(article, element);
                 break;
             case "ul":
@@ -134,8 +191,14 @@ public class ArticleRepository {
             case "hr":
                 article.appendHRule();
                 break;
+            case "table":
+                parseTable(article, element);
+                break;
             case "h2":
                 parseHeader(article, element);
+                break;
+            case "br":
+                // ignore;
                 break;
             default:
                 article.addUnhandledTag(element.tagName());
@@ -145,12 +208,44 @@ public class ArticleRepository {
         }
     }
 
-    private void parseImage(Article article, Element element) {
+    private void parseTable(@NonNull Article article, @NonNull Element element) {
+        int maxWidth = 0, width;
+        List<List<String>> rows = new LinkedList<>();
+
+        Elements trs = element.select("tr");
+        for (Element tr : trs) {
+            width = 0;
+            List<String> row = new LinkedList<>();
+            Elements tds = tr.select("td,th");
+            for (Element td : tds) {
+                String html = td.html();
+                html = html.replaceAll("<strong>", "<u>");
+                html = html.replaceAll("</strong>", "</u>");
+                row.add("<strong>" + html + "</strong>");
+                width++;
+            }
+
+            if (width > maxWidth) maxWidth = width;
+            rows.add(row);
+        }
+
+        String[][] table = new String[rows.size()][maxWidth];
+        for (int i = 0; i < rows.size(); i++) {
+            List<String> row = rows.get(i);
+            for (int j = 0; j < row.size(); j++) {
+                String cell = row.get(j);
+                table[i][j] = cell;
+            }
+        }
+        article.appendTable(table);
+    }
+
+    private void parseImage(@NonNull Article article, @NonNull Element element) {
         String imgUrl = element.attr("abs:src");
         article.appendImage(imgUrl);
     }
 
-    private void parseBlockquote(Article article, Element element) {
+    private void parseBlockquote(@NonNull Article article, @NonNull Element element) {
         String html = element.html();
         html = html.replaceAll("<strong>", "<u>");
         html = html.replaceAll("</strong>", "</u>");
@@ -158,23 +253,25 @@ public class ArticleRepository {
         article.appendBlockquote(html);
     }
 
-    private void parseUList(Article article, Element element) {
+    private void parseUList(@NonNull Article article, @NonNull Element element) {
         Elements listItems = element.select("li");
         for (Element listItem : listItems) {
             String html = listItem.html();
             html = html.replaceAll("<strong>", "<u>");
             html = html.replaceAll("</strong>", "</u>");
+
             article.appendListItem(html);
         }
     }
 
-    private void parseOList(Article article, Element element) {
+    private void parseOList(@NonNull Article article, @NonNull Element element) {
         int number = 1;
         Elements listItems = element.select("li");
         for (Element listItem : listItems) {
             String html = listItem.html();
             html = html.replaceAll("<strong>", "<u>");
             html = html.replaceAll("</strong>", "</u>");
+
             article.appendListItem(html, Integer.toString(number++));
         }
     }
@@ -223,27 +320,42 @@ public class ArticleRepository {
             return;
         }
 
+        // Footers
+        if (element.hasClass("footnotes-footer")) {
+            parseFooters(article, element);
+            return;
+        }
 
         Log.w(TAG, "Unhandled div (" + article.getId() + ") \n" + element.outerHtml());
         article.addUnhandledTag("div." + element.className() + "#" + element.id());
     }
 
+    private void parseFooters(@NonNull Article article, @NonNull Element element) {
+        article.appendHRule();
+
+        Elements footers = element.select("div.footnote-footer");
+        for (Element footer : footers) {
+            String html = footer.html();
+            html = html.replaceAll("<strong>", "<u>");
+            html = html.replaceAll("</strong>", "</u>");
+            article.appendFooter(html);
+        }
+    }
+
     private void parseFoldable(@NonNull Article article, @NonNull Element element) {
-        Elements foldedLinks = element.select("div.collapsible-block-folded>a");
-        Elements unfoldedLinks = element.select("div.collapsible-block-unfolded-link>a");
-        if (foldedLinks.isEmpty()) {
+        final Element foldedLink = selectFirst(element, "div.collapsible-block-folded>a");
+        final Element unfoldedLink = selectFirst(element, "div.collapsible-block-unfolded-link>a");
+        if ((foldedLink == null) || (unfoldedLink == null)) {
             Log.w(TAG, "Collapsible without folded link : " + element.outerHtml());
             return;
         }
-        if (unfoldedLinks.isEmpty()) {
-            Log.w(TAG, "Collapsible without unfolded link : " + element.outerHtml());
-            return;
-        }
+
+        // start
         article.startFoldable();
 
         // Links
-        article.appendFolded(foldedLinks.get(0).html());
-        article.appendLink(unfoldedLinks.get(0).html());
+        article.appendFolded(foldedLink.html());
+        article.appendLink(unfoldedLink.html());
 
         // content
         Elements divContents = element.select("div.collapsible-block-content");
@@ -257,23 +369,26 @@ public class ArticleRepository {
     }
 
     private void parsePicture(@NonNull Article article, @NonNull Element element) {
-        Elements imgs = element.select("img");
-        if (imgs.isEmpty()) {
+        final Element img = selectFirst(element, "img");
+        if (img == null) {
             Log.w(TAG, "Image container without image : " + element.outerHtml());
             return;
         }
-        String imgUrl = imgs.get(0).attr("abs:src");
+        String imgUrl = img.attr("abs:src");
         article.appendImage(imgUrl);
     }
 
     private void parsePhoto(@NonNull Article article, @NonNull Element element) {
-        Elements imgs = element.select("img");
-        if (imgs.isEmpty()) {
-            Log.w(TAG, "Photo block without image : " + element.outerHtml());
+        final Element img = selectFirst(element, "img");
+        if (img == null) {
+            Log.w(TAG, "Photo container without image : " + element.outerHtml());
             return;
         }
-        String imgUrl = imgs.get(0).attr("abs:src");
+
+        String imgUrl = img.attr("abs:src");
         String caption = element.select("div.scp-image-caption").html();
+        caption = caption.replaceAll("<strong>", "<u>");
+        caption = caption.replaceAll("</strong>", "</u>");
         article.appendPhoto(imgUrl, caption);
     }
 
@@ -298,7 +413,6 @@ public class ArticleRepository {
         article.appendListItem("<a href=\"http://jakewharton.github.io/butterknife/\">Butterknife</a>");
         article.appendListItem("<a href=\"https://github.com/ReactiveX/RxAndroid\">RxAndroid</a>");
         article.appendListItem("<a href=\"https://google.github.io/dagger/\">Dagger</a>");
-
 
         return article;
     }

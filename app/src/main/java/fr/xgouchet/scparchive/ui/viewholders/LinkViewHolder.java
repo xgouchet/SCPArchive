@@ -23,7 +23,7 @@ public class LinkViewHolder extends ParagraphViewHolder {
 
 
         Typeface typeface = BaseApplication.from(itemView.getContext())
-                .getAppComponent().getTypefaceForTitle();
+                .getAppComponent().getTypefaceForCaption();
         content.setTypeface(typeface);
     }
 

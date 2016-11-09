@@ -87,6 +87,10 @@ public class Article {
         appendElement(new Header(html));
     }
 
+    public void appendFooter(String html) {
+        appendElement(new Footer(html));
+    }
+
     public void appendFolded(String html) {
         if (currentFoldableId == NOT_A_FOLDABLE) {
             throw new IllegalStateException("You should call appendFolded after startFoldable");
@@ -100,12 +104,8 @@ public class Article {
         appendElement(new Link(html, currentFoldableId));
     }
 
-    public boolean hasFoldables() {
-        return foldableCount > 0;
-    }
-
-    public boolean isFolded(int foldableId) {
-        return foldableState[foldableId];
+    public void appendTable(String[][] table) {
+        appendElement(new Table(table));
     }
 
     public void appendElement(@NonNull ArticleElement e) {
@@ -116,17 +116,25 @@ public class Article {
         }
     }
 
+    public boolean hasFoldables() {
+        return foldableCount > 0;
+    }
+
+
+    public boolean isFolded(int foldableId) {
+        return foldableState[foldableId];
+    }
+
+
     @NonNull public List<ArticleElement> getElements() {
         return elements;
     }
-
 
     public void addUnhandledTag(String tagName) {
         if (!unhandledTags.contains(tagName)) {
             unhandledTags.add(tagName);
         }
     }
-
 
     @NonNull public String[] getUnhandledTags() {
         return unhandledTags.toArray(new String[unhandledTags.size()]);
@@ -152,5 +160,9 @@ public class Article {
 
     public void toggleFolded(int foldableId) {
         foldableState[foldableId] = !foldableState[foldableId];
+    }
+
+    public boolean isEmpty() {
+        return elements.isEmpty();
     }
 }

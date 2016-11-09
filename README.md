@@ -22,12 +22,13 @@ This is an Android application to discover and read SCP Foundation articles
 
 This application and its source code are licensed under Creative Commons Attribution-ShareAlike 3.0 License ([CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)). 
 
-
 ### SCP Foundation
 
 All articles are read from the SCP Foundation wiki ([scp-wiki.net](http://www.scp-wiki.net/)). 
 Those articles are licensed under Creative Commons Attribution-ShareAlike 3.0 
-License ([CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)). The list of all the authors of the articles are available [here](http://www.scp-wiki.net/members-pages). The article are used as is and 
+License ([CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)). 
+
+The list of all the authors of the articles are available [here](http://www.scp-wiki.net/members-pages).  
 
 ### Libraries
 
