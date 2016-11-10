@@ -140,6 +140,7 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.prompt_go_to);
         input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.requestFocus();
         builder.setView(input);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override

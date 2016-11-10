@@ -8,13 +8,14 @@ This is an Android application to discover and read SCP Foundation articles
 
  - Read articles from the SCP Foundation
  - Mark articles as items of interest
+ - Share articles
+ - Pull down to refresh
 
 ### To do
 
- - Handle spoiler elements
- - Handle footnotes
- - Share articles
+ - Handle table elements
  - Find a way to retrieve item names
+ - Find a way to retrieve authors
 
 ## LICENSE
 

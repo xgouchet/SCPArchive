@@ -5,9 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,20 +35,21 @@ import fr.xgouchet.scparchive.ui.viewholders.BaseViewHolder;
 import static butterknife.ButterKnife.bind;
 
 public class ArticleDetailFragment extends Fragment
-        implements BaseView<ArticlePresenter, Article>,BaseViewHolder.Listener<ArticleElement> {
+        implements BaseView<ArticlePresenter, Article>, BaseViewHolder.Listener<ArticleElement> {
 
     public static final String ARG_ITEM_ID = "item_id";
     public static final String ARG_ITEM_STACK = "item_stack";
 
-    @BindView(R.id.loading) ContentLoadingProgressBar loadingProgressBar;
     @BindView(R.id.list) RecyclerView list;
     @BindView(R.id.empty) TextView empty;
     @BindView(R.id.stamp) View stamp;
+    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
 
 
     private String articleId;
     private ArticlePresenter presenter;
     private final BaseSimpleAdapter<ArticleElement, ? extends BaseViewHolder<ArticleElement>> adapter;
+    @Nullable private Article content;
 
     public ArticleDetailFragment() {
         adapter = new ArticleElementAdapter(this);
@@ -75,12 +77,20 @@ public class ArticleDetailFragment extends Fragment
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override public void onRefresh() {
+                presenter.load(true);
+            }
+        });
+
         empty.setTypeface(((BaseActivity) getActivity()).getAppComponent().getTypefaceForCaption());
         return rootView;
     }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.article, menu);
+        menu.findItem(R.id.toggle_favorite).setVisible(content != null);
+        menu.findItem(R.id.share).setVisible(content != null);
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -115,16 +125,19 @@ public class ArticleDetailFragment extends Fragment
     }
 
     @Override public void setError(@Nullable Throwable throwable) {
+        list.setVisibility(View.GONE);
         Snackbar.make(list,
                 "An error occured : " + (throwable == null ? "‽" : throwable.getMessage()),
                 Snackbar.LENGTH_LONG)
                 .show();
+        getActivity().invalidateOptionsMenu();
+        getActivity().setTitle("");
     }
 
     @Override public void setContent(@NonNull Article content) {
-        getActivity().invalidateOptionsMenu();
-        getActivity().setTitle(content.getTitle());
         final List<ArticleElement> elements = content.getElements();
+
+        this.content = content;
 
         if (elements.size() == 0) {
             list.setVisibility(View.GONE);
@@ -135,13 +148,16 @@ public class ArticleDetailFragment extends Fragment
         }
         adapter.update(elements);
 
-        if (content.getId() != articleId) {
+        if (!TextUtils.equals(content.getId(), articleId)) {
             articleId = content.getId();
             list.scrollToPosition(0);
         }
 
         boolean favorite = presenter.isFavorite();
         stamp.setVisibility(favorite ? View.VISIBLE : View.GONE);
+
+        getActivity().invalidateOptionsMenu();
+        getActivity().setTitle(content.getTitle());
 
         if (BuildConfig.DEBUG) {
             final String[] unhandledTags = content.getUnhandledTags();
@@ -155,10 +171,19 @@ public class ArticleDetailFragment extends Fragment
     }
 
     @Override public void setLoading(boolean active) {
-        loadingProgressBar.setVisibility(active ? View.VISIBLE : View.GONE);
+        swipeRefreshLayout.setRefreshing(active);
+
+        if (active) {
+            this.content = null;
+            getActivity().setTitle("— Loading —");
+        }
+
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override public void onSelected(@NonNull ArticleElement item) {
         presenter.onInteraction(item);
     }
+
+
 }

@@ -38,10 +38,15 @@ public class ArticleRepository {
     public static final String BASE_INTERNAL_URL = "scp-archive://www.scp-wiki.net";
     public static final String ABOUT_ARTICLE = "__fr.xgouchet.scparchive.ABOUT__";
 
+    public static final String SCP_WIKI_LINK = "<a href=\"http://www.scp-wiki.net/\">SCP Foundation wiki</a>";
+    public static final String AUTHORS_LINK = "<a href=\"http://www.scp-wiki.net/members-pages\">Authors' page</a>";
+    public static final String GITHUB_LINK = "<a href=\"https://github.com/xgouchet/SCPArchive\">GitHub</a>";
+    public static final String CC_BY_SA_LINK = "<a href=\"http://creativecommons.org/licenses/by-sa/3.0/\">Creative Commons Attribution-ShareAlike 3.0 License</a>";
+
+
     private static final String DISCLAIMER = "This article comes from the " +
-            "<a href=\"http://www.scp-wiki.net\">SCP Foundation Wiki</a>.\n" +
-            "Use authorised under the Creative Commons License (Share Alike, Attribution, v3)";
-    private static final String AUTHORS_CREDIT = "Credits for this article go to its authors on the wiki. You can check the list of authors with the following link : ";
+            SCP_WIKI_LINK + " (use authorised under the " + CC_BY_SA_LINK + ").";
+    private static final String AUTHORS_CREDIT = "Credit for this article go to the authors on the wiki.";
 
     private final OkHttpClient client;
 
@@ -104,7 +109,7 @@ public class ArticleRepository {
         article.appendHRule();
         article.appendFooter(DISCLAIMER);
         article.appendFooter(AUTHORS_CREDIT);
-        article.appendFooter("<a href=\"" + scpUrl(article.getId()) + "#_history\">Authors of " + article.getTitle() + "</a>");
+//        article.appendFooter("<a href=\"" + scpUrl(article.getId()) + "#_history\">Authors of " + article.getTitle() + "</a>");
     }
 
     @Nullable public static Element selectFirst(@NonNull Element parent, @NonNull String query) {
@@ -398,8 +403,10 @@ public class ArticleRepository {
 
     private Article aboutArticle() {
         Article article = new Article(ABOUT_ARTICLE, "SCP-Archive");
-        article.appendBlockquote("<u>Credits:</u>All the content in this app comes from the <a href=\"http://www.scp-wiki.net/\">SCP Foundation wiki</a>, shared under the Creative Commons License (Attribution, Share Alike). An up to date list of all authors is available on the <a href=\"http://www.scp-wiki.net/members-pages\">Authors' page</a>.");
-        article.appendBlockquote("<u>License:</u> SCP-Archive itself is Open-Source, shared under the Creative Commons License (Attribution, Share Alike), and available on <a href=\"https://github.com/xgouchet/SCPArchive\">GitHub</a>");
+        article.appendBlockquote("<u>Credits:</u>All the content in this app comes from the " + SCP_WIKI_LINK + ", shared under the " + CC_BY_SA_LINK + ". " +
+                "An up to date list of all authors is available on the " + AUTHORS_LINK + ".");
+        article.appendBlockquote("<u>License:</u> SCP-Archive itself is Open-Source, shared under the " + CC_BY_SA_LINK +
+                ", and available on " + GITHUB_LINK + ".");
         article.appendPhoto("http://i.imgur.com/IDroBfX.jpg", "SCP-Archive on an Android phone");
         article.appendParagraph("<u>Item #:</u> SCP-Archive");
         article.appendParagraph("<u>Object Class:</u> Safe");
