@@ -28,16 +28,19 @@ import fr.xgouchet.scparchive.ui.viewholders.PhotoViewHolder;
  */
 public class ArticleElementAdapter extends BaseSimpleAdapter<ArticleElement, ArticleElementViewHolder> {
 
-    private static final int TYPE_PARAGRAPH = 1;
-    private static final int TYPE_HEADER = 2;
-    private static final int TYPE_FOOTER = 3;
-    private static final int TYPE_LINK = 4;
-    private static final int TYPE_BLOCK_QUOTE = 5;
-    private static final int TYPE_LIST_ITEM = 6;
-    private static final int TYPE_IMAGE = 7;
+    private static final int TYPE_HEADER_1 = 1;
+    private static final int TYPE_HEADER_2 = 2;
+    private static final int TYPE_HEADER_3 = 3;
+    private static final int TYPE_HEADER_4 = 4;
+    private static final int TYPE_FOOTER = 5;
+    private static final int TYPE_PARAGRAPH = 6;
+    private static final int TYPE_LIST_ITEM = 7;
     private static final int TYPE_PHOTO = 8;
-    private static final int TYPE_H_RULE = 9;
+    private static final int TYPE_IMAGE = 9;
     private static final int TYPE_TABLE = 10;
+    private static final int TYPE_LINK = 11;
+    private static final int TYPE_BLOCK_QUOTE = 12;
+    private static final int TYPE_H_RULE = 13;
 
     @NonNull private final BaseViewHolder.Listener<ArticleElement> listener;
 
@@ -58,7 +61,17 @@ public class ArticleElementAdapter extends BaseSimpleAdapter<ArticleElement, Art
         } else if (element instanceof Blockquote) {
             return TYPE_BLOCK_QUOTE;
         } else if (element instanceof Header) {
-            return TYPE_HEADER;
+            switch (((Header) element).getLevel()) {
+                case 1:
+                    return TYPE_HEADER_1;
+                case 2:
+                    return TYPE_HEADER_2;
+                case 3:
+                    return TYPE_HEADER_3;
+                case 4:
+                default:
+                    return TYPE_HEADER_4;
+            }
         } else if (element instanceof Footer) {
             return TYPE_FOOTER;
         } else if (element instanceof Link) {
@@ -78,7 +91,10 @@ public class ArticleElementAdapter extends BaseSimpleAdapter<ArticleElement, Art
         switch (viewType) {
             case TYPE_PARAGRAPH:
             case TYPE_BLOCK_QUOTE:
-            case TYPE_HEADER:
+            case TYPE_HEADER_1:
+            case TYPE_HEADER_2:
+            case TYPE_HEADER_3:
+            case TYPE_HEADER_4:
             case TYPE_FOOTER:
                 return new ParagraphViewHolder(null, view);
             case TYPE_LINK:
@@ -109,8 +125,14 @@ public class ArticleElementAdapter extends BaseSimpleAdapter<ArticleElement, Art
                 return R.layout.item_blockquote;
             case TYPE_H_RULE:
                 return R.layout.item_hrule;
-            case TYPE_HEADER:
-                return R.layout.item_header;
+            case TYPE_HEADER_1:
+                return R.layout.item_header_1;
+            case TYPE_HEADER_2:
+                return R.layout.item_header_2;
+            case TYPE_HEADER_3:
+                return R.layout.item_header_3;
+            case TYPE_HEADER_4:
+                return R.layout.item_header_4;
             case TYPE_FOOTER:
                 return R.layout.item_footer;
             case TYPE_LINK:

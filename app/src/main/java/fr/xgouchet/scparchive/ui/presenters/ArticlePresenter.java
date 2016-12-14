@@ -80,6 +80,21 @@ public class ArticlePresenter
         goToArticle(Article.randomArticleId(), true);
     }
 
+
+    public void goToPrevious() {
+        int id = Article.getId(articleId);
+        if (id > 0) {
+            goToArticle(id - 1);
+        }
+    }
+
+    public void goToNext() {
+        int id = Article.getId(articleId);
+        if (id >= 0) {
+            goToArticle(id + 1);
+        }
+    }
+
     public void goToArticle(int articleId) {
         goToArticle(Article.articleId(articleId), true);
     }
@@ -106,7 +121,7 @@ public class ArticlePresenter
         }
 
         view.setLoading(true);
-
+        subscriptions.clear();
         article = null;
 
         Subscription subscription = articleRepository.fetchArticle(articleId)
@@ -184,6 +199,17 @@ public class ArticlePresenter
         }
     }
 
+    public boolean canNavigateToPrevious() {
+        int id = Article.getId(articleId);
+        return id > 1;
+    }
+
+    public boolean canNavigateToNext() {
+        int id = Article.getId(articleId);
+        return id >= 0;
+    }
+
+
     private void onArticleLoaded(@Nullable Article article) {
         this.article = article;
         if (view == null) return;
@@ -207,6 +233,7 @@ public class ArticlePresenter
 
     private void resolveFoldables() {
         if (view == null) return;
+        subscriptions.clear();
 
         Subscription subscription = Observable.just(this.article)
                 .map(new ResolveFoldableArticle())

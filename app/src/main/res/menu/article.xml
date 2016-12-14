@@ -3,16 +3,28 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/navigate_prev"
+        android:icon="@drawable/ic_previous_black_24dp"
+        android:title="@string/action_previous"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/navigate_next"
+        android:icon="@drawable/ic_next_black_24dp"
+        android:title="@string/action_next"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/toggle_favorite"
         android:icon="@drawable/ic_scp_black_24dp"
         android:title="@string/action_toggle_favorite"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/random"
         android:icon="@drawable/ic_random_black_24dp"
         android:title="@string/action_random"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/share"
@@ -21,8 +33,8 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:icon="@drawable/ic_work_black_24dp"
         android:id="@+id/goToSelected"
+        android:icon="@drawable/ic_work_black_24dp"
         android:title="@string/action_go_to_selected"
         app:showAsAction="ifRoom"/>
 
@@ -37,7 +49,6 @@
         android:icon="@drawable/ic_about_black_24dp"
         android:title="@string/about"
         app:showAsAction="ifRoom"/>
-
 
 
 </menu>

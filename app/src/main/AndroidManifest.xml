@@ -38,6 +38,7 @@
 
                 <data
                     android:host="www.scp-wiki.net"
+                    android:pathPattern="/.*"
                     android:scheme="scp-archive"/>
 
             </intent-filter>

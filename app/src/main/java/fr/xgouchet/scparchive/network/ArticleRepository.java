@@ -199,8 +199,17 @@ public class ArticleRepository {
             case "table":
                 parseTable(article, element);
                 break;
+            case "h1":
+                parseHeader(article, element, 1);
+                break;
             case "h2":
-                parseHeader(article, element);
+                parseHeader(article, element, 2);
+                break;
+            case "h3":
+                parseHeader(article, element, 3);
+                break;
+            case "h4":
+                parseHeader(article, element, 4);
                 break;
             case "br":
                 // ignore;
@@ -290,13 +299,13 @@ public class ArticleRepository {
         article.appendParagraph(html);
     }
 
-    private void parseHeader(@NonNull Article article, @NonNull Element element) {
+    private void parseHeader(@NonNull Article article, @NonNull Element element, int level) {
 
         String html = element.html();
         html = html.replaceAll("<strong>", "<u>");
         html = html.replaceAll("</strong>", "</u>");
 
-        article.appendHeader(html);
+        article.appendHeader(html, level);
     }
 
     private void parseDiv(@NonNull Article article, @NonNull Element element) {

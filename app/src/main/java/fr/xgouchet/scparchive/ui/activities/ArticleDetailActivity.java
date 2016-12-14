@@ -54,6 +54,12 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         boolean result = true;
         switch (item.getItemId()) {
+            case R.id.navigate_prev:
+                presenter.goToPrevious();
+                break;
+            case R.id.navigate_next:
+                presenter.goToNext();
+                break;
             case R.id.random:
                 presenter.goToRandom();
                 break;

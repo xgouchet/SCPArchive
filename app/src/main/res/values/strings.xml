@@ -14,8 +14,15 @@
     <string name="action_go_to_selected">Items of interest</string>
     <string name="action_go_to">Open SCP file</string>
     <string name="action_share">Share</string>
+    <string name="action_previous">Previous</string>
+    <string name="action_next">Next</string>
+
+
     <string name="article_empty">No information about this item</string>
     <string name="favorite_stamp">Item of interest stamp</string>
+
     <string name="about">About …</string>
-    <string name="prompt_share_with">Share with...</string>
+
+    <string name="prompt_share_with">Share with…</string>
+
 </resources>

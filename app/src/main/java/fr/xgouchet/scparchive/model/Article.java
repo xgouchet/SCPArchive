@@ -83,8 +83,8 @@ public class Article {
         appendElement(new Blockquote(html));
     }
 
-    public void appendHeader(String html) {
-        appendElement(new Header(html));
+    public void appendHeader(String html, int level) {
+        appendElement(new Header(html, level));
     }
 
     public void appendFooter(String html) {
@@ -164,5 +164,25 @@ public class Article {
 
     public boolean isEmpty() {
         return elements.isEmpty();
+    }
+
+    @Override public String toString() {
+        return "Article { 'id' : \"" + articleId + "\"}";
+    }
+
+    public static int getId(@NonNull Article article) {
+        return getId(article.getId());
+    }
+
+    public static int getId(@NonNull String articleId) {
+        if (!articleId.startsWith("scp-")) return -2;
+
+        String number = articleId.substring(4);
+        int id = -2;
+        try {
+            id = Integer.valueOf(number);
+        } catch (NumberFormatException ignore) {
+        }
+        return id;
     }
 }

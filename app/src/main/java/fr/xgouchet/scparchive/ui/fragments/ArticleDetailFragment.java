@@ -91,6 +91,9 @@ public class ArticleDetailFragment extends Fragment
         inflater.inflate(R.menu.article, menu);
         menu.findItem(R.id.toggle_favorite).setVisible(content != null);
         menu.findItem(R.id.share).setVisible(content != null);
+
+        menu.findItem(R.id.navigate_prev).setVisible(presenter.canNavigateToPrevious());
+        menu.findItem(R.id.navigate_next).setVisible(presenter.canNavigateToNext());
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
