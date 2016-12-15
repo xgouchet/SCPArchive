@@ -12,5 +12,9 @@
     <color name="titleColorSecondary">#80FFFFFF</color>
 
     <color name="paper">#eeeeee</color>
+    <color name="folder">#eeee90</color>
+    <color name="metal">#808890</color>
+    <color name="metal_highlight">#c0c0c0</color>
+    <color name="metal_shadow">#404040</color>
 
 </resources>

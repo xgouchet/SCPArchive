@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.view.ViewPager
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fr.xgouchet.scparchive.ui.views.TypefacePagerTitleStrip
+        android:id="@+id/pager_strip"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="top"
+        android:background="@color/colorPrimaryLight"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/textColorSecondary"/>
+</android.support.v4.view.ViewPager>

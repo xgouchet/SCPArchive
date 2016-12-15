@@ -27,6 +27,26 @@ public class Article {
         return String.format(Locale.US, "scp-%03d", id);
     }
 
+    public static String articleTitle(int id) {
+        return String.format(Locale.US, "SCP-%03d", id);
+    }
+
+    public static int getId(@NonNull Article article) {
+        return getId(article.getId());
+    }
+
+    public static int getId(@NonNull String articleId) {
+        if (!articleId.startsWith("scp-")) return -2;
+
+        String number = articleId.substring(4);
+        int id = -2;
+        try {
+            id = Integer.valueOf(number);
+        } catch (NumberFormatException ignore) {
+        }
+        return id;
+    }
+
     @NonNull private final String articleId;
     @Nullable private String url;
     @NonNull private String title;
@@ -170,19 +190,5 @@ public class Article {
         return "Article { 'id' : \"" + articleId + "\"}";
     }
 
-    public static int getId(@NonNull Article article) {
-        return getId(article.getId());
-    }
 
-    public static int getId(@NonNull String articleId) {
-        if (!articleId.startsWith("scp-")) return -2;
-
-        String number = articleId.substring(4);
-        int id = -2;
-        try {
-            id = Integer.valueOf(number);
-        } catch (NumberFormatException ignore) {
-        }
-        return id;
-    }
 }

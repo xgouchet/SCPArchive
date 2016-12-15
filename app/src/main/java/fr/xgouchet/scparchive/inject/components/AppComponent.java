@@ -12,6 +12,7 @@ import fr.xgouchet.scparchive.inject.annotations.TypefaceForTitle;
 import fr.xgouchet.scparchive.inject.modules.GlobalModule;
 import fr.xgouchet.scparchive.inject.modules.RepositoryModule;
 import fr.xgouchet.scparchive.network.ArticleRepository;
+import fr.xgouchet.scparchive.network.DrawerArticleRepository;
 import fr.xgouchet.scparchive.network.FavoriteArticleRepository;
 import okhttp3.OkHttpClient;
 
@@ -35,6 +36,7 @@ public interface AppComponent {
 
     ArticleRepository getArticleRepository();
     FavoriteArticleRepository getFavoriteArticleRepository();
+    DrawerArticleRepository getDrawerArticleRepository();
 
     // MISC
 

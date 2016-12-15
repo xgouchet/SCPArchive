@@ -13,6 +13,8 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import com.deezer.android.counsel.annotations.Trace;
+
 import fr.xgouchet.scparchive.R;
 import fr.xgouchet.scparchive.model.Article;
 import fr.xgouchet.scparchive.network.ArticleRepository;
@@ -21,10 +23,13 @@ import fr.xgouchet.scparchive.ui.presenters.ArticlePresenter;
 
 import static fr.xgouchet.scparchive.commons.SpannedUtils.withTypeface;
 
+@Trace
 public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleDetailFragment> {
 
 
     public static final int FAVORITE_REQUEST = 55;
+    public static final int BROWSE_REQUEST = 66;
+
     private ArticlePresenter presenter;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,8 +71,11 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
             case R.id.goTo:
                 promptNumber();
                 break;
-            case R.id.goToSelected:
-                promptSelected();
+            case R.id.goToBrowser:
+                promptBrowser();
+                break;
+            case R.id.goToFavorite:
+                promptFavorite();
                 break;
             case R.id.about:
                 presenter.goToArticle(ArticleRepository.ABOUT_ARTICLE, true);
@@ -92,7 +100,7 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == FAVORITE_REQUEST) {
+            if ((requestCode == FAVORITE_REQUEST) || (requestCode == BROWSE_REQUEST)) {
                 String itemId = data.getStringExtra(ArticleDetailFragment.ARG_ITEM_ID);
                 if (itemId != null) {
                     presenter.goToArticle(itemId, true);
@@ -101,9 +109,14 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
         }
     }
 
-    private void promptSelected() {
+    private void promptFavorite() {
         Intent intent = new Intent(this, SelectFavoriteArticleActivity.class);
         startActivityForResult(intent, FAVORITE_REQUEST);
+    }
+
+    private void promptBrowser() {
+        Intent intent = new Intent(this, BrowseDrawerActivity.class);
+        startActivityForResult(intent, BROWSE_REQUEST);
     }
 
     @NonNull @Override protected String readItem(@Nullable Intent intent) {

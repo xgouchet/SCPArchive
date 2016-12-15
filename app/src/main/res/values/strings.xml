@@ -12,6 +12,7 @@
     <string name="action_random">Open random SCP file</string>
     <string name="action_toggle_favorite">Add/remove interest</string>
     <string name="action_go_to_selected">Items of interest</string>
+    <string name="action_browse">Browse files</string>
     <string name="action_go_to">Open SCP file</string>
     <string name="action_share">Share</string>
     <string name="action_previous">Previous</string>

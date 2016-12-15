@@ -45,6 +45,8 @@
         </activity>
 
         <activity android:name=".ui.activities.SelectFavoriteArticleActivity"/>
+        <activity android:name=".ui.activities.BrowseDrawerActivity"/>
+        <activity android:name=".ui.activities.BrowseArticleActivity"/>
     </application>
 
 </manifest>

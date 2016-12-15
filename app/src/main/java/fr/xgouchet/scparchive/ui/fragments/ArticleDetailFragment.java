@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.deezer.android.counsel.annotations.Trace;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,6 +36,7 @@ import fr.xgouchet.scparchive.ui.viewholders.BaseViewHolder;
 
 import static butterknife.ButterKnife.bind;
 
+@Trace
 public class ArticleDetailFragment extends Fragment
         implements BaseView<ArticlePresenter, Article>, BaseViewHolder.Listener<ArticleElement> {
 
