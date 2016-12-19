@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import fr.xgouchet.scparchive.BaseApplication;
 import fr.xgouchet.scparchive.R;
+import fr.xgouchet.scparchive.inject.components.AppComponent;
 
 import static butterknife.ButterKnife.bind;
 
@@ -32,6 +33,14 @@ public class FavoriteArticleViewHolder extends BaseViewHolder<String> {
     }
 
     @Override protected void onBindItem(@NonNull String item) {
+        Typeface typeface;
+        if (item.equals("scp-095-j")) {
+            typeface = getAppComponent(itemView).getTypefaceForSCP095J();
+        } else {
+            typeface = getAppComponent(itemView).getTypefaceForCaption();
+        }
+        name.setTypeface(typeface);
+
         if (TextUtils.equals(item, "scp-2521")) {
             name.setText("●●/●●●●●/●●/●");
         } else {
@@ -42,5 +51,10 @@ public class FavoriteArticleViewHolder extends BaseViewHolder<String> {
     @OnClick(R.id.favorite)
     public void onClickFavorite() {
         fireSelected();
+    }
+
+    private AppComponent getAppComponent(@NonNull View itemView) {
+        return BaseApplication.from(itemView.getContext())
+                .getAppComponent();
     }
 }

@@ -12,6 +12,7 @@ import fr.xgouchet.scparchive.inject.annotations.ApplicationScope;
 import fr.xgouchet.scparchive.inject.annotations.OfflineInterceptor;
 import fr.xgouchet.scparchive.inject.annotations.OnlineInterceptor;
 import fr.xgouchet.scparchive.inject.annotations.TypefaceForCaption;
+import fr.xgouchet.scparchive.inject.annotations.TypefaceForSCP095J;
 import fr.xgouchet.scparchive.inject.annotations.TypefaceForText;
 import fr.xgouchet.scparchive.inject.annotations.TypefaceForTitle;
 import fr.xgouchet.scparchive.network.CacheInterceptor;
@@ -29,6 +30,7 @@ public class GlobalModule {
     public static final String FONTS_CARBON_TTF = "fonts/carbon.ttf";
     public static final String FONTS_1942_TTF = "fonts/1942.ttf";
     public static final String FONTS_DAISYWHL_TTF = "fonts/daisywhl.ttf";
+    public static final String FONTS_SCP_095_J_TTF = "fonts/095J.ttf";
 
     private static final long CACHE_SIZE_BYTES = 16 * 1024 * 1024;
 
@@ -99,5 +101,13 @@ public class GlobalModule {
     @TypefaceForCaption
     @NonNull Typeface provideTypefaceForCaption(@ApplicationContext Context context) {
         return Typeface.createFromAsset(context.getAssets(), FONTS_CARBON_TTF);
+    }
+
+
+    @Provides
+    @ApplicationScope
+    @TypefaceForSCP095J
+    @NonNull Typeface provideTypefaceForSCP095J(@ApplicationContext Context context) {
+        return Typeface.createFromAsset(context.getAssets(), FONTS_SCP_095_J_TTF);
     }
 }

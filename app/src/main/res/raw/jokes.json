@@ -1,0 +1,832 @@
+[
+  {
+    "path": "scp-000-j",
+    "id": "SCP-000-J",
+    "title": "The Official SCP Sales Catalogue"
+  },
+  {
+    "path": "scp-001-j",
+    "id": "SCP-001-J",
+    "title": "The Big Red Button"
+  },
+  {
+    "path": "scp-001-ex-j",
+    "id": "SCP-001-EX-J",
+    "title": "Records of the CKG Gathering"
+  },
+  {
+    "path": "scp-002-j",
+    "id": "SCP-002-J",
+    "title": "Amnesiac Treatment"
+  },
+  {
+    "path": "scp-003-j",
+    "id": "SCP-:3-J",
+    "title": "Memetic Language Construct"
+  },
+  {
+    "path": "scp-004-j",
+    "id": "SCP-004-J",
+    "title": "Stan from Accounting"
+  },
+  {
+    "path": "scp-005-j-ex",
+    "id": "SCP-005-J-EX",
+    "title": "No, because <em>she</em> thinks he's talking about the…"
+  },
+  {
+    "path": "scp-006-j",
+    "id": "SCP-006-J",
+    "title": "WHAT THE FUCK IS THAT THING"
+  },
+  {
+    "path": "scp-007-j",
+    "id": "SCP-007-J",
+    "title": "Unidentified Muffin Creature"
+  },
+  {
+    "path": "scp-008-j",
+    "id": "SCP-008-J",
+    "title": "Geoff"
+  },
+  {
+    "path": "scp-009-j",
+    "id": "SCP-009-J",
+    "title": "Where Is It?"
+  },
+  {
+    "path": "scp-010-j",
+    "id": "SCP-010-J",
+    "title": "WHAT KETER I DON'T SEE ANY KETER"
+  },
+  {
+    "path": "scp-011-j",
+    "id": "SCP-011-J",
+    "title": "The Baby"
+  },
+  {
+    "path": "scp-012-j",
+    "id": "SCP-012-J",
+    "title": "Special Comedy Procedures"
+  },
+  {
+    "path": "scp-013-j",
+    "id": "SCP-013-J",
+    "title": "The Cuttlefish of Ultimate Wisdom"
+  },
+  {
+    "path": "scp-014-j",
+    "id": "SCP-014-J",
+    "title": "A Fork"
+  },
+  {
+    "path": "scp-022-j",
+    "id": "SCP-022-J",
+    "title": "Memetic Metal"
+  },
+  {
+    "path": "scp-026-j",
+    "id": "SCP-026-J",
+    "title": "A Cold Post"
+  },
+  {
+    "path": "scp-031-j",
+    "id": "SCP-031-J",
+    "title": "Evening of Terrors"
+  },
+  {
+    "path": "scp-042-j",
+    "id": "SCP-042-J",
+    "title": "Billions of Anomalous Pillows"
+  },
+  {
+    "path": "scp-048-j",
+    "id": "SCP-048-J",
+    "title": "Negative Probability Phrase"
+  },
+  {
+    "path": "scp-50-ae-j",
+    "id": "SCP-50-AE-J",
+    "title": "The Deagle"
+  },
+  {
+    "path": "scp-065-j",
+    "id": "SCP-065-J",
+    "title": "Singing Cacti Amigos"
+  },
+  {
+    "path": "scp-069-j",
+    "id": "SCP-069-J",
+    "title": "Sisters of Cheyenne Point"
+  },
+  {
+    "path": "scp-078-j",
+    "id": "SCP-078-J",
+    "title": "Cooties"
+  },
+  {
+    "path": "scp-095-j",
+    "id": "SCP-095-J",
+    "title": "Anomalous Typeface"
+  },
+  {
+    "path": "scp-096-j",
+    "id": "SCP-096-J",
+    "title": "NarrAway"
+  },
+  {
+    "path": "scp-100-j",
+    "id": "SCP-100-J",
+    "title": "A Steaming Pile of Shit"
+  },
+  {
+    "path": "scp-103-j",
+    "id": "SCP-103-J",
+    "title": "Confirmed"
+  },
+  {
+    "path": "scp-111-j",
+    "id": "SCP-111-J",
+    "title": "An Innocent Suburban Household"
+  },
+  {
+    "path": "scp-118-j",
+    "id": "SCP-118-J",
+    "title": "The Saltiest Doctor Alive"
+  },
+  {
+    "path": "scp-123-j",
+    "id": "SCP-123-J",
+    "title": "Amazing Butter-like Substance!"
+  },
+  {
+    "path": "scp-145-j",
+    "id": "SCP-145-J",
+    "title": "Another Shitty Day at Work"
+  },
+  {
+    "path": "scp-164-j",
+    "id": "SCP-164-J",
+    "title": "Ear Magic"
+  },
+  {
+    "path": "spc-169-j",
+    "id": "SPC-169-J",
+    "title": "The Big One"
+  },
+  {
+    "path": "spc-173-j",
+    "id": "SPC-173-J",
+    "title": "The Original \"The Sculpture\""
+  },
+  {
+    "path": "scp-184-j",
+    "id": "SCP-184-J",
+    "title": "The Elaboration Squirrel"
+  },
+  {
+    "path": "scp-1d6-j",
+    "id": "SCP-1D6-J",
+    "title": "Gygax's Folly"
+  },
+  {
+    "path": "scp-200-j",
+    "id": "SCP-200-J",
+    "title": "Refrigerator Logic"
+  },
+  {
+    "path": "scp-222-j",
+    "id": "SCP-222-J",
+    "title": "Contagious Biophysical Behavior"
+  },
+  {
+    "path": "scp-231-j",
+    "id": "SCP-231-J",
+    "title": "0.453592 Kilograms of Flesh"
+  },
+  {
+    "path": "scp-329-j",
+    "id": "SCP-329-J",
+    "title": "The Ghoooost Siiiign"
+  },
+  {
+    "path": "scp-300-j",
+    "id": "SCP-300-J",
+    "title": "Our Glorious Ruler"
+  },
+  {
+    "path": "scp-333-j",
+    "id": "SCP-333-J",
+    "title": "Skippy's Corner Pub"
+  },
+  {
+    "path": "scp-334-j",
+    "id": "SCP-334-J",
+    "title": "The Lost Sock Room"
+  },
+  {
+    "path": "scp-404-j",
+    "id": "SCP-404-J",
+    "title": "The Pantheon"
+  },
+  {
+    "path": "scp-419-j",
+    "id": "SCP-419-J",
+    "title": "A Trustworthy Man"
+  },
+  {
+    "path": "scp-420-j",
+    "id": "SCP-420-J",
+    "title": "The Best ████ in the World"
+  },
+  {
+    "path": "scp-496-j",
+    "id": "SCP-496-J",
+    "title": "Dr. Margaret Sawyer-Sheen"
+  },
+  {
+    "path": "scp-500-j",
+    "id": "SCP-500-J",
+    "title": "That bitch"
+  },
+  {
+    "path": "scp-536-j",
+    "id": "SCP-536-J",
+    "title": "It's on the back of your head"
+  },
+  {
+    "path": "scp-543-j",
+    "id": "SCP-543-J",
+    "title": "Tweetle Beetles"
+  },
+  {
+    "path": "scp-616-j",
+    "id": "SCP-616-J",
+    "title": "Class D Recruitment Process"
+  },
+  {
+    "path": "scp-619-j",
+    "id": "SCP-619-J",
+    "title": "Championship Belt"
+  },
+  {
+    "path": "scp-630-j",
+    "id": "SCP-630-J",
+    "title": "A Song In Their Heart"
+  },
+  {
+    "path": "scp-666-j",
+    "id": "SCP-666-J",
+    "title": "Dr. Gerald's Driving Skills"
+  },
+  {
+    "path": "scp-666-and-a-half-j",
+    "id": "SCP-666-1/2-J",
+    "title": "The Roaring Flames of Hell"
+  },
+  {
+    "path": "scp-682-j",
+    "id": "SCP-682-J",
+    "title": "SUPER BESTEST LIZERD EVER"
+  },
+  {
+    "path": "scp-723-j",
+    "id": "SCP-723-J",
+    "title": "Sad Roach"
+  },
+  {
+    "path": "scp-724-j",
+    "id": "SCP-724-J",
+    "title": "Bad Roach"
+  },
+  {
+    "path": "scp-727-j",
+    "id": "SCP-727-J",
+    "title": "Malevolent Celestial Object"
+  },
+  {
+    "path": "scp-732-j",
+    "id": "SCP-732-J",
+    "title": "Tiny Ceramic Seahorse"
+  },
+  {
+    "path": "scp-777-j",
+    "id": "SCP-777-J",
+    "title": "Darkblade"
+  },
+  {
+    "path": "scp-789-j",
+    "id": "SCP-789-J",
+    "title": "the butt ghost!!"
+  },
+  {
+    "path": "scp-800-j",
+    "id": "SCP-800-J",
+    "title": "American Football"
+  },
+  {
+    "path": "scp-808-j",
+    "id": "SCP-808-J",
+    "title": "The Lost Treasure of Captain Blue's Island"
+  },
+  {
+    "path": "scp-810-j",
+    "id": "SCP-810-J",
+    "title": "A Dog In Need Of Funds"
+  },
+  {
+    "path": "scp-885-j",
+    "id": "SCP-885-J",
+    "title": "Researcher Jacobs' Inability To Clean Up After Himself"
+  },
+  {
+    "path": "scp-900-j",
+    "id": "SCP-900-J",
+    "title": "Modern Major Keter-Class"
+  },
+  {
+    "path": "scp-938-j",
+    "id": "SCP-938-J",
+    "title": "Hell's Bells"
+  },
+  {
+    "path": "scp-999-j",
+    "id": "SCP-999-J",
+    "title": "Creepy Speedo Man"
+  },
+  {
+    "path": "scp-1000-j",
+    "id": "SCP-1000-J",
+    "title": "Old Wives' Town"
+  },
+  {
+    "path": "scp-1013-j",
+    "id": "SCP-1013-J",
+    "title": "Tree Rats"
+  },
+  {
+    "path": "scp-1026-j",
+    "id": "SCP-1026-J",
+    "title": "Mr. Somebody"
+  },
+  {
+    "path": "scp-1040-j",
+    "id": "SCP-1040-J",
+    "title": "A Dangerous Mental Contagion"
+  },
+  {
+    "path": "scp-1047-j",
+    "id": "SCP-1047-J",
+    "title": "The Troll"
+  },
+  {
+    "path": "scp-1049-j",
+    "id": "SCP-1049-J",
+    "title": "The Grim Bucket"
+  },
+  {
+    "path": "scp-1111-j",
+    "id": "SCP-1111-J",
+    "title": "A Working Computer"
+  },
+  {
+    "path": "scp-1132-j",
+    "id": "SCP-1132-J",
+    "title": "Head-Cannons"
+  },
+  {
+    "path": "scp-1150-j",
+    "id": "SCP-1150-J",
+    "title": "Budget Hole"
+  },
+  {
+    "path": "scp-1162-j",
+    "id": "SCP-1162-J",
+    "title": "Double Down Sandwich"
+  },
+  {
+    "path": "scp-1201-j",
+    "id": "SCP-1201-J",
+    "title": "That One Movie"
+  },
+  {
+    "path": "scp-1212-j",
+    "id": "SCP-1212-J",
+    "title": "Standards"
+  },
+  {
+    "path": "scp-1224-j",
+    "id": "SCP-1224-J",
+    "title": "Duck-Class Personnel"
+  },
+  {
+    "path": "scp-1234-j",
+    "id": "SCP-1234-J",
+    "title": "An SCP"
+  },
+  {
+    "path": "scp-1333-j",
+    "id": "SCP-1333-J!",
+    "title": "THE SCREAMING MAN"
+  },
+  {
+    "path": "scp-1344-j",
+    "id": "SCP-1344-J",
+    "title": "Glass-Like Lifeform"
+  },
+  {
+    "path": "scp-1394-j",
+    "id": "SCP-1394-J",
+    "title": "Upside-Down Connector"
+  },
+  {
+    "path": "scp-1417-j",
+    "id": "SCP-1417-J",
+    "title": "Passive-Aggressive Meteorite"
+  },
+  {
+    "path": "scp-1459-j",
+    "id": "SCP-1459-J",
+    "title": "X-Sponge"
+  },
+  {
+    "path": "scp-1471-j",
+    "id": "SCP-1471-J",
+    "title": "Sensual Containment Procedures"
+  },
+  {
+    "path": "scp-1543-j",
+    "id": "SCP-1543-J",
+    "title": "The Sun Launcher"
+  },
+  {
+    "path": "scp-1550-j",
+    "id": "SCP-1550-J",
+    "title": "The Professor's Wheelchair"
+  },
+  {
+    "path": "scp-1595-j",
+    "id": "SCP-1595-J",
+    "title": "Sweethearts"
+  },
+  {
+    "path": "scp-1622-j",
+    "id": "SCP-1622-J",
+    "title": "Class-Action Lawfruit"
+  },
+  {
+    "path": "scp-1638-j",
+    "id": "SCP-1638-J",
+    "title": "A Dark and Mysterious Printing Plate"
+  },
+  {
+    "path": "scp-1840-j",
+    "id": "SCP-1840-J",
+    "title": "The Hard Sell"
+  },
+  {
+    "path": "scp-1851-j",
+    "id": "SCP-1851-J",
+    "title": "Fibber Lake"
+  },
+  {
+    "path": "scp-1914-j",
+    "id": "SCP-1914-J",
+    "title": "Silencing Piano"
+  },
+  {
+    "path": "scp-1922-j",
+    "id": "SCP-1922-J",
+    "title": "Pathetic System of American Pigs"
+  },
+  {
+    "path": "scp-1938-j",
+    "id": "SCP-1938-J",
+    "title": "Typhoid Mary"
+  },
+  {
+    "path": "scp-1955-j",
+    "id": "SCP-1955-J",
+    "title": "Musical Audio Surveillance Distortion"
+  },
+  {
+    "path": "scp-1960-j",
+    "id": "SCP-1960-J",
+    "title": "Stone Sphere"
+  },
+  {
+    "path": "scp-1981-j",
+    "id": "SCP-1981-J",
+    "title": "Just A Small Town Girl"
+  },
+  {
+    "path": "scp-1987-j",
+    "id": "SCP-1987-J",
+    "title": "Bitchin' Solo"
+  },
+  {
+    "path": "scp-1992-j",
+    "id": "SCP-1992-J",
+    "title": "Hype Train"
+  },
+  {
+    "path": "scp-1994-j",
+    "id": "SCP-1994-J",
+    "title": "THE BAAAAAAAAAAALLLLL"
+  },
+  {
+    "path": "scp-2000-j",
+    "id": "SCP-2000-J",
+    "title": "Dunky the Funky Werecat 2000: Werecat Strikes Back"
+  },
+  {
+    "path": "scp-butt-j",
+    "id": "SCP-2001-J",
+    "title": "Laser Butt Disease"
+  },
+  {
+    "path": "scp-2006-j",
+    "id": "SCP-2006-J",
+    "title": "Metamorphic Eldritch Entity"
+  },
+  {
+    "path": "scp-2008-j",
+    "id": "SCP-2008-J",
+    "title": "Cryptozoological life form"
+  },
+  {
+    "path": "scp-2029-j",
+    "id": "SCP-2029-J",
+    "title": "Artificial Unintelligence"
+  },
+  {
+    "path": "scp-2041-j",
+    "id": "SCP-2041-J",
+    "title": "Tankapult"
+  },
+  {
+    "path": "scp-2100-j",
+    "id": "SCP-2100-J",
+    "title": "Hard-Boiled Fedora"
+  },
+  {
+    "path": "scp-2103-j",
+    "id": "SCP-2103-J",
+    "title": "Hatbot"
+  },
+  {
+    "path": "scp-2130-j",
+    "id": "SCP-2130-J",
+    "title": "But seriously, folks…"
+  },
+  {
+    "path": "scp-2383-j",
+    "id": "SCP-2383-J",
+    "title": "Science"
+  },
+  {
+    "path": "scp-2412-j",
+    "id": "SCP-2412-J",
+    "title": "The Laplander"
+  },
+  {
+    "path": "scp-2421-j",
+    "id": "SCP-2421-J",
+    "title": "The Upvote Syndrome"
+  },
+  {
+    "path": "scp-2558-j",
+    "id": "SCP-2558-J",
+    "title": "Pufferkittens"
+  },
+  {
+    "path": "scp-2559-j",
+    "id": "SCP-2559-J",
+    "title": "Portal to the Plane of Infinite Kittens"
+  },
+  {
+    "path": "scp-2600-j",
+    "id": "SCP-2600-J",
+    "title": "Bicycle Mafia"
+  },
+  {
+    "path": "scp-2615-j",
+    "id": "SCP-2615-J",
+    "title": "Clap Your Hands"
+  },
+  {
+    "path": "scp-2618-j",
+    "id": "SCP-2618-J",
+    "title": "Then Who Was Nanners?"
+  },
+  {
+    "path": "scp-2950-j",
+    "id": "SCP-2950-J",
+    "title": "THE POSTCARD"
+  },
+  {
+    "path": "scp-3v1l-j",
+    "id": "SCP-3V1L-J",
+    "title": "The Master Plan"
+  },
+  {
+    "path": "spc-3284-j",
+    "id": "SPC-3284-J",
+    "title": "Lava Sharks"
+  },
+  {
+    "path": "scp-3333-j",
+    "id": "SCP-3333-J",
+    "title": "Angsty Teenage Plant"
+  },
+  {
+    "path": "scp-3467-j",
+    "id": "SCP-3467-J",
+    "title": "Six Foot Man-Eating-Chicken"
+  },
+  {
+    "path": "scp-4002-j",
+    "id": "SCP-4002-J",
+    "title": "Curd of Prey"
+  },
+  {
+    "path": "scp-4055-j",
+    "id": "SCP-4055-J",
+    "title": "Ugly Dog"
+  },
+  {
+    "path": "scp-4237-j",
+    "id": "SCP-4237-J",
+    "title": "Object of Indescribable Action"
+  },
+  {
+    "path": "scp-4263-j",
+    "id": "SCP-4263-J",
+    "title": "Googly Eyes"
+  },
+  {
+    "path": "scp-4357-j",
+    "id": "SCP-4357-J",
+    "title": "Cooperative Demon"
+  },
+  {
+    "path": "scp-4444-j",
+    "id": "SCP-4444-J",
+    "title": "Disinformation Campaign: Operation Golden Origin"
+  },
+  {
+    "path": "scp-4445-j",
+    "id": "SCP-4445-J",
+    "title": "Disinformation Campaign: Operation Trident Valley"
+  },
+  {
+    "path": "scp-4590-j",
+    "id": "SCP-4590-J",
+    "title": "Japucha"
+  },
+  {
+    "path": "scp-5040-j",
+    "id": "SCP-5040-J",
+    "title": "Stripèd Gangs"
+  },
+  {
+    "path": "scp-5150-j",
+    "id": "SCP-5150-J",
+    "title": "Think Of The Children"
+  },
+  {
+    "path": "scp-why-are-you-reading-a-url-go-be-productive-j",
+    "id": "SCP-5200-J",
+    "title": "JUST SAY NO!!!"
+  },
+  {
+    "path": "scp-5280-j",
+    "id": "SCP-5280-J",
+    "title": "Antiquated Measurement System"
+  },
+  {
+    "path": "scp-5308-j",
+    "id": "SCP-5308-J",
+    "title": "The Collection"
+  },
+  {
+    "path": "scp-5555-j",
+    "id": "SCP-5555-J",
+    "title": "The Chibinator"
+  },
+  {
+    "path": "scp-5972-j",
+    "id": "SCP-5972-J",
+    "title": "Kirby Company Vacuum Cleaner"
+  },
+  {
+    "path": "scp-6327-j",
+    "id": "SCP-6327-J",
+    "title": "[redacted for brevity]"
+  },
+  {
+    "path": "scp-7000-j",
+    "id": "SCP-7000-J",
+    "title": "Veni, Vidi, [DATA EXPUNGED]"
+  },
+  {
+    "path": "scp-7143-j",
+    "id": "SCP-7143-J",
+    "title": "An Attractive Piece of Hardware"
+  },
+  {
+    "path": "scp-7394-j",
+    "id": "SCP-7394-J",
+    "title": "HILARIOUS FARTING FROG CLICK NOW TO SEE"
+  },
+  {
+    "path": "scp-7475-j",
+    "id": "SCP-7475-J",
+    "title": "Turbo Shark Pulverizer 6000"
+  },
+  {
+    "path": "scp-7560-j",
+    "id": "SCP-7560-J",
+    "title": "Deccadence, Being the Writings of Wisest RESEARCHER Frank Gene Decray"
+  },
+  {
+    "path": "scp-7800-j",
+    "id": "SCP-7800-J",
+    "title": "The Five-Second Rule"
+  },
+  {
+    "path": "scp-10101-j",
+    "id": "SCP-10101-J",
+    "title": "Not A Self-Insert At All"
+  },
+  {
+    "path": "scp-19316-j",
+    "id": "SCP-19316-J",
+    "title": "Improper Terminology"
+  },
+  {
+    "path": "scp-100000-j",
+    "id": "SCP-100000-J",
+    "title": "Procedure 110-Overkill"
+  },
+  {
+    "path": "scp-47-47-j",
+    "id": "SCP-47-47-J",
+    "title": "Rusty the Wonder Dog"
+  },
+  {
+    "path": "scp-649-2568-j",
+    "id": "SCP-649-2568-J",
+    "title": "Technicolor Geography"
+  },
+  {
+    "path": "scp-80-k-j",
+    "id": "SCP-80-K-J",
+    "title": "Chicken Corps"
+  },
+  {
+    "path": "scp-k9-j-ex",
+    "id": "SCP-K9-J-EX",
+    "title": "The Haunted House"
+  },
+  {
+    "path": "scp-j",
+    "id": "SCP-____-J",
+    "title": "Procrastinati"
+  },
+  {
+    "path": "scp-even-number-j",
+    "id": "SCP-even number-J",
+    "title": "An [Adjective] [Animal]"
+  },
+  {
+    "path": "scp-deals-j",
+    "id": "SCP-DEALS-J",
+    "title": "ANOMALOUSLY LOW PRICES ON USED AUTOMOBILES"
+  },
+  {
+    "path": "scp-safe-j",
+    "id": "SCP-SAFE-J",
+    "title": "Some safes"
+  },
+  {
+    "path": "scp-scp-j",
+    "id": "SCP-SCP-J",
+    "title": "It's Scippy!"
+  },
+  {
+    "path": "scp-spooky-j",
+    "id": "SCP-SPOOKY-J",
+    "title": "A Veteran Of The Skeleton War"
+  },
+  {
+    "path": "scp-ttku-j",
+    "id": "SCP-TTKU-J",
+    "title": "A Thing That Kills You"
+  },
+  {
+    "path": "scp-wtf-j",
+    "id": "SCP-WTF-J",
+    "title": "The Worst"
+  }
+]

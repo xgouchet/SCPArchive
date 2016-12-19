@@ -72,6 +72,9 @@ public abstract class BaseListFragment<T, A extends BaseSimpleAdapter<T, ? exten
 
     @Override public void setPresenter(@NonNull BaseListPresenter<T> presenter) {
         this.presenter = presenter;
+        if (isResumed()){
+            presenter.subscribe();
+        }
     }
 
     @Override public void setLoading(boolean active) {
@@ -96,6 +99,10 @@ public abstract class BaseListFragment<T, A extends BaseSimpleAdapter<T, ? exten
         adapter.update(entities);
         message.setVisibility(View.GONE);
         list.setVisibility(View.VISIBLE);
+    }
+
+    @Nullable public BaseListPresenter<T> getPresenter() {
+        return presenter;
     }
 
     @Override public void onSelected(@NonNull T item) {

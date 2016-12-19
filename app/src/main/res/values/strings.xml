@@ -2,6 +2,7 @@
     <string name="app_name">SCP Archives</string>
 
     <string name="title_favorite_articles">Items of interest</string>
+    <string name="title_browse_drawers">Browse filing cabinet</string>
 
     <string name="empty_list">No files available</string>
 

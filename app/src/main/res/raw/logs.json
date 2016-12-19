@@ -1,0 +1,17 @@
+[
+  {
+    "path": "log-of-anomalous-items",
+    "id": "Log Of Anomalous Items",
+    "title": "Log Of Anomalous Items"
+  },
+  {
+    "path": "log-of-extranormal-events",
+    "id": "Log of Extranormal Events",
+    "title": "Log of Extranormal Events"
+  },
+  {
+    "path": "log-of-unexplained-locations",
+    "id": "Log of Unexplained Locations",
+    "title": "Log of Unexplained Locations"
+  }
+]

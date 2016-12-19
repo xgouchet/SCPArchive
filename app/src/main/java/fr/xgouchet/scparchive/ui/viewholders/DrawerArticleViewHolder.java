@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import fr.xgouchet.scparchive.BaseApplication;
 import fr.xgouchet.scparchive.R;
+import fr.xgouchet.scparchive.inject.components.AppComponent;
 import fr.xgouchet.scparchive.model.Article;
 
 import static butterknife.ButterKnife.bind;
@@ -26,14 +27,18 @@ public class DrawerArticleViewHolder extends BaseViewHolder<Article> {
                                    @NonNull View itemView) {
         super(listener, itemView);
         bind(this, itemView);
-
-        Typeface typeface = BaseApplication.from(itemView.getContext())
-                .getAppComponent().getTypefaceForCaption();
-        name.setTypeface(typeface);
     }
 
     @Override protected void onBindItem(@NonNull Article item) {
         String id = item.getId();
+        Typeface typeface;
+        if (id.equals("scp-095-j")) {
+            typeface = getAppComponent(itemView).getTypefaceForSCP095J();
+        } else {
+            typeface = getAppComponent(itemView).getTypefaceForCaption();
+        }
+        name.setTypeface(typeface);
+
         if (TextUtils.equals(id, "scp-2521")) {
             name.setText("●●/●●●●●/●●/●");
         } else {
@@ -44,5 +49,10 @@ public class DrawerArticleViewHolder extends BaseViewHolder<Article> {
     @OnClick(R.id.folder)
     public void onClickFavorite() {
         fireSelected();
+    }
+
+    private AppComponent getAppComponent(@NonNull View itemView) {
+        return BaseApplication.from(itemView.getContext())
+                .getAppComponent();
     }
 }

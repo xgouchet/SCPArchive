@@ -7,6 +7,7 @@ import dagger.Component;
 import fr.xgouchet.scparchive.inject.annotations.ApplicationContext;
 import fr.xgouchet.scparchive.inject.annotations.ApplicationScope;
 import fr.xgouchet.scparchive.inject.annotations.TypefaceForCaption;
+import fr.xgouchet.scparchive.inject.annotations.TypefaceForSCP095J;
 import fr.xgouchet.scparchive.inject.annotations.TypefaceForText;
 import fr.xgouchet.scparchive.inject.annotations.TypefaceForTitle;
 import fr.xgouchet.scparchive.inject.modules.GlobalModule;
@@ -43,4 +44,5 @@ public interface AppComponent {
     @TypefaceForCaption Typeface getTypefaceForCaption();
     @TypefaceForText Typeface getTypefaceForText();
     @TypefaceForTitle Typeface getTypefaceForTitle();
+    @TypefaceForSCP095J Typeface getTypefaceForSCP095J();
 }

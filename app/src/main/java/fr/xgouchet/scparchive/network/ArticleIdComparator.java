@@ -41,7 +41,7 @@ public class ArticleIdComparator implements Comparator<String> {
 
         if (s.matches("^scp-[0-9]+$")) return FLAG_ARTICLE;
         if (s.matches("^scp-[0-9]+-j$")) return FLAG_JOKE;
-        if (s.matches("^scp-.+-j$")) return FLAG_JOKE_NON_PARSABLE;
+        if (s.matches("^scp-(.+-)?j$")) return FLAG_JOKE_NON_PARSABLE;
         if (s.matches("^scp-[0-9]+-ex")) return FLAG_EXPLAINED;
         if (s.matches("^scp-[0-9]+-arc$")) return FLAG_ARCHIVE;
 

@@ -14,13 +14,13 @@ import fr.xgouchet.scparchive.ui.adapters.DrawerAdapter;
 public class DrawerListFragment extends BaseListFragment<Drawer, DrawerAdapter> {
 
 
-
     @Override public void itemSelected(@NonNull Drawer item) {
         Intent intent = new Intent(getActivity(), BrowseArticleActivity.class);
 
         intent.putExtra(BrowseArticleActivity.ARG_DRAWER_ID, item.getIndex());
         getActivity().startActivityForResult(intent, BrowseDrawerActivity.REQUEST_BROWSE_ARTICLE);
     }
+
 
     @Override protected DrawerAdapter getAdapter() {
         return new DrawerAdapter(this);

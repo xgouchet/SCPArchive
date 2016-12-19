@@ -44,17 +44,6 @@ public class BrowseArticleActivity extends BaseFragmentActivity<Drawer, DrawerAr
         if (name == null) name = "";
 
         return new Drawer(name, id);
-//        if (id < 10000) {
-//            List<Article> articles = new ArrayList<>(100);
-//            int end = id == 1 ? 99 : id + 100;
-//            for (int i = id; i < end; ++i){
-//                articles.add(new Article(Article.articleId(i), Article.articleTitle(i)));
-//            }
-//            return articles;
-//        }
-//
-//        // TODO load from assets ?
-
     }
 
     @NonNull @Override

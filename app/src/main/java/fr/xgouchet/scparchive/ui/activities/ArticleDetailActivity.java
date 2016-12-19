@@ -148,8 +148,13 @@ public class ArticleDetailActivity extends BaseFragmentActivity<String, ArticleD
         return fragment;
     }
 
-    @Override public void setTitle(CharSequence title) {
-        Typeface typeface = getAppComponent().getTypefaceForTitle();
+    @Override public void setTitle(@NonNull CharSequence title) {
+        Typeface typeface;
+        if (title.equals("SCP-095-J")) {
+            typeface = getAppComponent().getTypefaceForSCP095J();
+        } else {
+            typeface = getAppComponent().getTypefaceForTitle();
+        }
         super.setTitle(withTypeface(title, typeface));
     }
 

@@ -1,14 +1,17 @@
 package fr.xgouchet.scparchive.ui.adapters;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 import fr.xgouchet.scparchive.model.Drawer;
+import fr.xgouchet.scparchive.network.DrawerArticleRepository;
 import fr.xgouchet.scparchive.ui.activities.BaseActivity;
 import fr.xgouchet.scparchive.ui.fragments.DrawerListFragment;
 import fr.xgouchet.scparchive.ui.presenters.DrawerListPresenter;
@@ -51,16 +54,16 @@ public class FilingCabinetAdapter extends FragmentStatePagerAdapter {
             new Drawer("SCP 2700 - 2799", 2700),
             new Drawer("SCP 2800 - 2899", 2800),
             new Drawer("SCP 2900 - 2999", 2900));
-    public static final List<Drawer> SERIES_OTHER = asList(new Drawer("SCP Jokes", 100000),
-            new Drawer("SCP Archived", 110000),
-            new Drawer("SCP Explained", 120000),
-            new Drawer("Logs", 130000),
-            new Drawer("", 140000),
-            new Drawer("", 150000),
-            new Drawer("", 160000),
-            new Drawer("", 170000),
-            new Drawer("", 180000),
-            new Drawer("", 190000));
+    public static final List<Drawer> SERIES_OTHER = asList(new Drawer("SCP Jokes", DrawerArticleRepository.ID_JOKES),
+            new Drawer("SCP Archived", DrawerArticleRepository.ID_ARCHIVED),
+            new Drawer("SCP Explained", DrawerArticleRepository.ID_EXPLAINED),
+            new Drawer("Logs", DrawerArticleRepository.ID_LOGS),
+            new Drawer("", DrawerArticleRepository.ID_EMPTY),
+            new Drawer("", DrawerArticleRepository.ID_EMPTY),
+            new Drawer("", DrawerArticleRepository.ID_EMPTY),
+            new Drawer("", DrawerArticleRepository.ID_EMPTY),
+            new Drawer("", DrawerArticleRepository.ID_EMPTY),
+            new Drawer("", DrawerArticleRepository.ID_EMPTY));
 
     public static final int PAGE_SERIES_1 = 0;
     public static final int PAGE_SERIES_2 = 1;
@@ -83,6 +86,17 @@ public class FilingCabinetAdapter extends FragmentStatePagerAdapter {
         return PAGE_COUNT;
     }
 
+    @Override public Object instantiateItem(ViewGroup container, int position) {
+        final DrawerListFragment item = (DrawerListFragment) super.instantiateItem(container, position);
+
+        if (item.getPresenter() == null) {
+            final DrawerListPresenter presenter = getPresenter(position);
+            if (presenter != null) {
+                presenter.setView(item);
+            }
+        }
+        return item;
+    }
 
     public Fragment getItem(int position) {
         BaseActivity activity = activityRef.get();
@@ -90,32 +104,23 @@ public class FilingCabinetAdapter extends FragmentStatePagerAdapter {
             return null;
         }
 
-        switch (position) {
-            case PAGE_SERIES_1: {
-                final DrawerListFragment fragment = new DrawerListFragment();
-                DrawerListPresenter presenter = new DrawerListPresenter(SERIES_1);
-                presenter.setView(fragment);
-                return fragment;
-            }
-            case PAGE_SERIES_2: {
-                final DrawerListFragment fragment = new DrawerListFragment();
-                DrawerListPresenter presenter = new DrawerListPresenter(SERIES_2);
-                presenter.setView(fragment);
-                return fragment;
-            }
-            case PAGE_SERIES_3: {
-                final DrawerListFragment fragment = new DrawerListFragment();
-                DrawerListPresenter presenter = new DrawerListPresenter(SERIES_3);
-                presenter.setView(fragment);
-                return fragment;
-            }
-            case PAGE_SERIES_OTHER: {
-                final DrawerListFragment fragment = new DrawerListFragment();
-                DrawerListPresenter presenter = new DrawerListPresenter(SERIES_OTHER);
-                presenter.setView(fragment);
-                return fragment;
-            }
+        final DrawerListFragment fragment = new DrawerListFragment();
+        DrawerListPresenter presenter = getPresenter(position);
+        if (presenter == null) return null;
+        presenter.setView(fragment);
+        return fragment;
+    }
 
+    @Nullable private DrawerListPresenter getPresenter(int position) {
+        switch (position) {
+            case PAGE_SERIES_1:
+                return new DrawerListPresenter(SERIES_1);
+            case PAGE_SERIES_2:
+                return new DrawerListPresenter(SERIES_2);
+            case PAGE_SERIES_3:
+                return new DrawerListPresenter(SERIES_3);
+            case PAGE_SERIES_OTHER:
+                return new DrawerListPresenter(SERIES_OTHER);
             default:
                 return null;
         }
